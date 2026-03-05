@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "xcode": {
+      "type": "stdio",
+      "command": "xcrun",
+      "args": [
+        "mcpbridge"
+      ],
+      "env": {
+        "XCODE_PATH": "/Applications/Xcode-26.3.0.app"
+      }
+    }
+  }
+}

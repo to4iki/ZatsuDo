@@ -1,0 +1,17 @@
+public struct ZatsuTask: Equatable, Hashable, Sendable, Identifiable {
+  public let id: String
+  public let name: String
+  public let description: String
+
+  public init(id: String, name: String, description: String) {
+    self.id = id
+    self.name = name
+    self.description = description
+  }
+}
+
+extension ZatsuTask {
+  public static func sample(_ name: String) -> Self {
+    Self(id: name, name: name, description: "")
+  }
+}

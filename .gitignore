@@ -1,0 +1,10 @@
+# iOS and Xcode specific files
+/.build
+/Packages
+/*.xcodeproj
+xcuserdata/
+DerivedData/
+.swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
+
+# macOS-specific files
+.DS_Store

@@ -1,0 +1,10 @@
+pre-commit:
+  parallel: true
+  commands:
+    swiftformat:
+      glob: "*.{swift}"
+      run: make swiftformat
+      stage_fixed: true
+      skip:
+        - merge
+        - rebase

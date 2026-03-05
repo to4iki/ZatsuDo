@@ -1,0 +1,53 @@
+// swift-tools-version: 6.2
+// The swift-tools-version declares the minimum version of Swift required to build this package.
+
+import PackageDescription
+
+let package = Package(
+  name: "AppPackage",
+  defaultLocalization: "en",
+  platforms: [.iOS(.v26)],
+  products: [
+    .library(
+      name: "AppFeature",
+      targets: ["AppFeature"]
+    )
+  ],
+  targets: [
+    // -- Feature Layer --
+    .target(
+      name: "AppFeature",
+      dependencies: [
+        "TaskFeature",
+        "SettingFeature",
+        "OnboardingFeature",
+      ],
+      path: "./Sources/Feature/App"
+    ),
+    .target(
+      name: "TaskFeature",
+      dependencies: [
+        "FeatureCommon",
+        "SharedModel",
+      ],
+      path: "./Sources/Feature/Task",
+    ),
+    .target(
+      name: "SettingFeature",
+      path: "./Sources/Feature/Setting"
+    ),
+    .target(
+      name: "OnboardingFeature",
+      path: "./Sources/Feature/Onboarding"
+    ),
+    .target(
+      name: "FeatureCommon"
+    ),
+
+    // -- Core Layer ---
+    .target(
+      name: "SharedModel",
+      path: "./Sources/Core/SharedModel"
+    ),
+  ]
+)

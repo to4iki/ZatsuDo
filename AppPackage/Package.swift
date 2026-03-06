@@ -13,6 +13,9 @@ let package = Package(
       targets: ["AppFeature"]
     )
   ],
+  dependencies: [
+    .package(path: "../AppLibrary")
+  ],
   targets: [
     // -- Feature Layer --
     .target(
@@ -41,12 +44,18 @@ let package = Package(
       path: "./Sources/Feature/Onboarding"
     ),
     .target(
-      name: "FeatureCommon"
+      name: "FeatureCommon",
+      dependencies: [
+        .product(name: "Logger", package: "AppLibrary")
+      ]
     ),
 
     // -- Core Layer ---
     .target(
       name: "SharedModel",
+      dependencies: [
+        .product(name: "UtilType", package: "AppLibrary")
+      ],
       path: "./Sources/Core/SharedModel"
     ),
   ]

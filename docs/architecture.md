@@ -5,12 +5,17 @@ Appターゲットはアプリ起動用のエントリで、SwiftPackage の App
 ```mermaid
 graph TD
   App[App/ - メインターゲット] --> AppPackage
-  AppPackage[AppPackage/ - メイン実装]
+  AppPackage[AppPackage/ - メイン実装] --> AppLibrary
+  AppLibrary[AppLibrary/ - 共通ライブラリ]
 
   subgraph AppPackage
     Feature[Feature - UI実装] --> Core & FeatureCommon
     Core[Core - 非UI実装]
     FeatureCommon[FeatureCommon - 共通UI]
+  end
+
+  subgraph AppLibrary
+    Logger[Logger - OSLogラッパー]
   end
 ```
 

@@ -9,4 +9,5 @@ swiftformat:
 		--in-place \
 		--recursive \
 		./App \
-		./AppPackage
+		./AppPackage \
+		./AppLibrary

@@ -12,6 +12,7 @@ UI実装には SwiftUI を利用する。
 
 - `App/` - メインターゲットでアプリのエントリポイント、本実装は AppPackage で行う
 - `AppPackage/` - アプリのメイン実装を行うSwiftPackage
+- `AppLibrary/` - ドメインに依存しない3rdパーティ相当のライブラリ実装を行うSwiftPackage
 
 ## 開発コマンド
 

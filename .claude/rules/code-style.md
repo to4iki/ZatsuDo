@@ -2,6 +2,7 @@
 paths:
   - "App/**/*.{swift}"
   - "AppPackage/**/*.{swift}"
+  - "AppLibrary/**/*.{swift}"
 ---
 
 # コードスタイルルール

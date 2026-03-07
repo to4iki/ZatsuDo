@@ -12,8 +12,14 @@ public struct TaskListScreen: View {
 
   public var body: some View {
     NavigationStack {
-      TaskListView(uiState: viewModel.uiState)
-        .navigationTitle(String(localized: "TaskList", bundle: .module))
+      TaskListView(
+        uiState: viewModel.uiState,
+        onToggleTask: { viewModel.toggleTask(id: $0) },
+        onUpdateInputText: { viewModel.updateInputText($0) },
+        onAddTask: { viewModel.addTask() }
+      )
+      .navigationTitle(String(localized: "Today", bundle: .module))
+      .navigationBarTitleDisplayMode(.large)
     }
   }
 }

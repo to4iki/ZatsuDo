@@ -11,15 +11,19 @@ public struct ZatsuTask: Equatable, Hashable, Sendable, Identifiable {
 
   public let id: ID
   public let name: String
+  public let isDone: Bool
 
-  public init(id: ID, name: String) {
+  public init(id: ID, name: String, isDone: Bool) {
     self.id = id
     self.name = name
+    self.isDone = isDone
   }
 }
 
+// MARK: - Mock
+
 extension ZatsuTask {
-  public static func sample(_ name: String) -> Self {
-    Self(id: "id_\(name)", name: name)
+  public static func mock(_ name: String) -> Self {
+    Self(id: "id_\(name)", name: name, isDone: false)
   }
 }

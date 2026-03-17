@@ -10,7 +10,7 @@ graph TD
 
   subgraph AppPackage
     Feature[Feature - UI実装] --> Core & FeatureCommon
-    Core[Core - 非UI実装]
+    Core[Core - 非UI実装<br/>SharedModel / AppStorage]
     FeatureCommon[FeatureCommon - 共通UI]
   end
 
@@ -40,12 +40,15 @@ Featureモジュール間の依存は禁止。Feature間の連携は `AppFeature
 
 | モジュール | 役割 |
 |---|---|
+| `AppStorage` | UserDefaults を抽象化したアプリ設定の永続化 |
 | `SharedModel` | Feature間で共有するモデル定義 |
 
 依存関係:
 
 ```
 AppFeature → TaskFeature → SharedModel
+AppFeature → AppStorage
+SettingFeature → AppStorage
 ```
 
 ## スクリーンアーキテクチャ

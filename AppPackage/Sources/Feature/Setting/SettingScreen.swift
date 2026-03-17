@@ -1,16 +1,23 @@
 import SwiftUI
 
 public struct SettingScreen: View {
-  public init() {}
+  private let viewModel: SettingViewModel
+
+  public init(viewModel: SettingViewModel) {
+    self.viewModel = viewModel
+  }
 
   public var body: some View {
     NavigationStack {
-      SettingView()
-        .navigationTitle(String(localized: "Setting", bundle: .module))
+      SettingView(
+        uiState: viewModel.uiState,
+        onUpdateResetTime: { viewModel.updateResetTime($0) }
+      )
+      .navigationTitle(String(localized: "Setting", bundle: .module))
     }
   }
 }
 
 #Preview {
-  SettingScreen()
+  SettingScreen(viewModel: .init())
 }

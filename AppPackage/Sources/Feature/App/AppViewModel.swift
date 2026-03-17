@@ -1,3 +1,4 @@
+import AppStorage
 import Foundation
 import Observation
 
@@ -9,17 +10,17 @@ public struct AppUiState: Sendable, Equatable {
 @Observable
 @MainActor
 public final class AppViewModel {
-  private static let onboardingCompletedKey = "isOnboardingCompleted"
+  private let store: AppSettingsStore
 
   public private(set) var uiState: AppUiState
 
-  public init() {
-    let completed = UserDefaults.standard.bool(forKey: Self.onboardingCompletedKey)
-    self.uiState = AppUiState(isOnboardingCompleted: completed)
+  public init(store: AppSettingsStore = .shared) {
+    self.store = store
+    self.uiState = AppUiState(isOnboardingCompleted: store.isOnboardingCompleted)
   }
 
   public func completeOnboarding() {
-    UserDefaults.standard.set(true, forKey: Self.onboardingCompletedKey)
+    store.isOnboardingCompleted = true
     uiState.isOnboardingCompleted = true
   }
 

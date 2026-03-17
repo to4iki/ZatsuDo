@@ -1,3 +1,4 @@
+import AppStorage
 import Foundation
 import Observation
 
@@ -16,16 +17,13 @@ public struct SettingUiState: Sendable, Equatable {
 @Observable
 @MainActor
 public final class SettingViewModel {
-  private static let resetHourKey = "resetHour"
-  private static let resetMinuteKey = "resetMinute"
+  private let store: AppSettingsStore
 
   public private(set) var uiState: SettingUiState
 
-  public init() {
-    let defaults = UserDefaults.standard
-    let hour = defaults.object(forKey: Self.resetHourKey) as? Int ?? 4
-    let minute = defaults.object(forKey: Self.resetMinuteKey) as? Int ?? 0
-    self.uiState = SettingUiState(resetHour: hour, resetMinute: minute)
+  public init(store: AppSettingsStore = .shared) {
+    self.store = store
+    self.uiState = SettingUiState(resetHour: store.resetHour, resetMinute: store.resetMinute)
   }
 
   public func updateResetTime(_ date: Date) {
@@ -35,7 +33,7 @@ public final class SettingViewModel {
     guard hour != uiState.resetHour || minute != uiState.resetMinute else { return }
     uiState.resetHour = hour
     uiState.resetMinute = minute
-    UserDefaults.standard.set(hour, forKey: Self.resetHourKey)
-    UserDefaults.standard.set(minute, forKey: Self.resetMinuteKey)
+    store.resetHour = hour
+    store.resetMinute = minute
   }
 }

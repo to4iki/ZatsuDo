@@ -24,6 +24,7 @@ let package = Package(
         "TaskFeature",
         "SettingFeature",
         "OnboardingFeature",
+        "AppStorage",
       ],
       path: "./Sources/Feature/App"
     ),
@@ -37,6 +38,9 @@ let package = Package(
     ),
     .target(
       name: "SettingFeature",
+      dependencies: [
+        "AppStorage"
+      ],
       path: "./Sources/Feature/Setting"
     ),
     .target(
@@ -51,6 +55,10 @@ let package = Package(
     ),
 
     // -- Core Layer ---
+    .target(
+      name: "AppStorage",
+      path: "./Sources/Core/AppStorage"
+    ),
     .target(
       name: "SharedModel",
       dependencies: [

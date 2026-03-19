@@ -66,5 +66,22 @@ let package = Package(
       ],
       path: "./Sources/Core/SharedModel"
     ),
+
+    // -- Test --
+    .testTarget(
+      name: "AppFeatureTests",
+      dependencies: ["AppFeature", "AppStorage"],
+      path: "./Tests/Feature/App"
+    ),
+    .testTarget(
+      name: "OnboardingFeatureTests",
+      dependencies: ["OnboardingFeature"],
+      path: "./Tests/Feature/Onboarding"
+    ),
+    .testTarget(
+      name: "SettingFeatureTests",
+      dependencies: ["SettingFeature", "AppStorage"],
+      path: "./Tests/Feature/Setting"
+    ),
   ]
 )

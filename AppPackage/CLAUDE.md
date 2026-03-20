@@ -9,5 +9,5 @@
 - `Feature/Setting/` - 設定機能
 - `Feature/Onboarding/` - オンボーディング機能
 - `FeatureCommon/` - 各フィーチャーで共通利用するUIコンポーネント定義
-- `Core/AppStorage/` - UserDefaults を抽象化したアプリ設定の永続化
+- `Core/AppStorage/` - `AppSettingsClient`（`@DependencyClient`）によるアプリ設定の永続化。内部で UserDefaults を利用
 - `Core/SharedModel/` - 共通利用するモデル定義

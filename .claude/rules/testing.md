@@ -45,30 +45,31 @@ AppPackage/Tests/Feature/Setting/SettingViewModelTests.swift
 - `#expect` マクロを使用する
 - `try #require` で前提条件の検証が必要な場合に使う
 
-## UserDefaults の分離
+## 依存の差し替え
 
-`AppSettingsStore` を利用するテストでは、テスト間の干渉を防ぐため専用の `UserDefaults` を使用する。
+ViewModel のテストでは [swift-dependencies](https://github.com/pointfreeco/swift-dependencies) の `withDependencies` を使用し、依存をテスト用の値に差し替える。
 
 ```swift
 @MainActor
 @Suite
 struct ExampleViewModelTests {
-  private let suiteName = "ExampleViewModelTests"
-
-  init() {
-    UserDefaults.standard.removePersistentDomain(forName: suiteName)
-  }
-
   @Test
   func someAction_expectedBehavior() {
-    let defaults = UserDefaults(suiteName: suiteName)!
-    let store = AppSettingsStore(defaults: defaults)
-    let viewModel = ExampleViewModel(store: store)
+    withDependencies {
+      $0.appSettingsClient.fetchResetHour = { 4 }
+      $0.appSettingsClient.setResetHour = { _ in }
+    } operation: {
+      let viewModel = ExampleViewModel()
 
-    // ...
+      // ...
+    }
   }
 }
 ```
+
+- `withDependencies` ブロック内で必要なエンドポイントのみオーバーライドする
+- setter の呼び出しを検証したい場合はキャプチャ変数を使用する
+- 依存を一切カスタマイズしない場合は `$0.appSettingsClient = .testValue` で一括設定できる
 
 ## テストケースの粒度
 

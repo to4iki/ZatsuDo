@@ -19,6 +19,13 @@ feature → featureCommon
 - coreはfeatureに依存しない
 - feature同士の依存は禁止
 
+## 依存注入 (DI)
+
+- [swift-dependencies](https://github.com/pointfreeco/swift-dependencies) を使用する
+- Core層のクライアントは `@DependencyClient` マクロで定義する
+- ViewModel では `@Dependency` プロパティラッパーで依存を取得する
+- Preview では `withDependencies` で `previewValue` を注入する
+
 ## ビューの状態管理
 
 - `Screen` と `ViewModel` (UiState & Action) は 1:1 で対応させる

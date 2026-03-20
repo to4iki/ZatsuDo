@@ -28,8 +28,8 @@ public final class SettingViewModel {
 
   public func updateResetTime(_ date: Date) {
     let components = Calendar.current.dateComponents([.hour, .minute], from: date)
-    let hour = components.hour ?? 4
-    let minute = components.minute ?? 0
+    let hour = components.hour ?? AppSettingsStore.defaultResetHour
+    let minute = components.minute ?? AppSettingsStore.defaultResetMinute
     guard hour != uiState.resetHour || minute != uiState.resetMinute else { return }
     uiState.resetHour = hour
     uiState.resetMinute = minute

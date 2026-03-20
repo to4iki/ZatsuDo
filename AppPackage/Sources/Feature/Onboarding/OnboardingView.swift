@@ -2,7 +2,7 @@ import SwiftUI
 
 struct OnboardingView: View {
   private let uiState: OnboardingUiState
-  private let pageSelection: Binding<Int>
+  @Binding var pageSelection: Int
   private let onAdvance: () -> Void
   private let onComplete: () -> Void
 
@@ -13,7 +13,7 @@ struct OnboardingView: View {
     onComplete: @escaping () -> Void
   ) {
     self.uiState = uiState
-    self.pageSelection = pageSelection
+    self._pageSelection = pageSelection
     self.onAdvance = onAdvance
     self.onComplete = onComplete
   }
@@ -40,7 +40,7 @@ struct OnboardingView: View {
   }
 
   private var pageContent: some View {
-    TabView(selection: pageSelection) {
+    TabView(selection: $pageSelection) {
       page1.tag(0)
       page2.tag(1)
     }

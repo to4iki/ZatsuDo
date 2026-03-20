@@ -1,9 +1,15 @@
 import Foundation
 
+/// Thread-safety note: All properties delegate to `UserDefaults`, which is
+/// thread-safe. The only stored property (`defaults`) is `let`, so there is
+/// no mutable shared state in this class.
 public final class AppSettingsStore: @unchecked Sendable {
   private let defaults: UserDefaults
 
   public static let shared = AppSettingsStore()
+
+  public static let defaultResetHour = 4
+  public static let defaultResetMinute = 0
 
   public init(defaults: UserDefaults = .standard) {
     self.defaults = defaults
@@ -37,7 +43,7 @@ extension AppSettingsStore {
   }
 
   private enum Defaults {
-    static let resetHour = 4
-    static let resetMinute = 0
+    static let resetHour = AppSettingsStore.defaultResetHour
+    static let resetMinute = AppSettingsStore.defaultResetMinute
   }
 }

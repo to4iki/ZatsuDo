@@ -4,7 +4,6 @@ import Observation
 
 public struct AppUiState: Sendable, Equatable {
   public var isOnboardingCompleted: Bool
-  public var isSettingPresented: Bool = false
 }
 
 @Observable
@@ -13,6 +12,7 @@ public final class AppViewModel {
   private let store: AppSettingsStore
 
   public private(set) var uiState: AppUiState
+  public var isSettingPresented: Bool = false
 
   public init(store: AppSettingsStore = .shared) {
     self.store = store
@@ -25,10 +25,6 @@ public final class AppViewModel {
   }
 
   public func presentSetting() {
-    uiState.isSettingPresented = true
-  }
-
-  public func dismissSetting() {
-    uiState.isSettingPresented = false
+    isSettingPresented = true
   }
 }

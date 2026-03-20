@@ -30,4 +30,34 @@ struct SettingViewModelTests {
     #expect(store.resetHour == 7)
     #expect(store.resetMinute == 30)
   }
+
+  @Test
+  func updateResetTime_skipsWhenValueUnchanged() {
+    let defaults = UserDefaults(suiteName: suiteName)!
+    let store = AppSettingsStore(defaults: defaults)
+    let viewModel = SettingViewModel(store: store)
+
+    let initialHour = viewModel.uiState.resetHour
+    let initialMinute = viewModel.uiState.resetMinute
+
+    var components = DateComponents()
+    components.hour = initialHour
+    components.minute = initialMinute
+    let sameDate = Calendar.current.date(from: components)!
+
+    viewModel.updateResetTime(sameDate)
+
+    #expect(viewModel.uiState.resetHour == initialHour)
+    #expect(viewModel.uiState.resetMinute == initialMinute)
+  }
+
+  @Test
+  func init_loadsDefaultValues() {
+    let defaults = UserDefaults(suiteName: suiteName)!
+    let store = AppSettingsStore(defaults: defaults)
+    let viewModel = SettingViewModel(store: store)
+
+    #expect(viewModel.uiState.resetHour == AppSettingsStore.defaultResetHour)
+    #expect(viewModel.uiState.resetMinute == AppSettingsStore.defaultResetMinute)
+  }
 }

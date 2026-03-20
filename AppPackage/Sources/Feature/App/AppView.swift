@@ -12,19 +12,17 @@ public struct AppView: View {
   public init() {}
 
   public var body: some View {
+    @Bindable var appViewModel = appViewModel
+
     if appViewModel.uiState.isOnboardingCompleted {
       TaskListScreen(
         viewModel: taskListViewModel,
         onPresentSetting: { appViewModel.presentSetting() }
       )
-      .sheet(
-        isPresented: Binding(
-          get: { appViewModel.uiState.isSettingPresented },
-          set: { if !$0 { appViewModel.dismissSetting() } }
-        )
-      ) {
+      .sheet(isPresented: $appViewModel.isSettingPresented) {
         SettingScreen(viewModel: settingViewModel)
       }
+      .transition(.opacity)
     } else {
       OnboardingScreen(
         viewModel: onboardingViewModel,
@@ -34,6 +32,7 @@ public struct AppView: View {
           }
         }
       )
+      .transition(.opacity)
     }
   }
 }

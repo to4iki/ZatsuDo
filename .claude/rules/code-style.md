@@ -70,3 +70,8 @@ extension View {
   func wrapViewInCircle(borderWidth: CGFloat) -> some View {}
 }
 ```
+
+#### アクセシビリティ
+
+- 装飾的なアイコン（アクションを持たない `Image(systemName:)` など）には `.accessibilityHidden(true)` を付与する
+- `.opacity(0)` で非表示にしたインタラクティブ要素には `.disabled()` と `.accessibilityHidden()` も併せて付与し、VoiceOverからのフォーカスとタップを防止する

@@ -22,6 +22,7 @@ UI実装には SwiftUI を利用する。
 
 - `code-style.md` - コードスタイル
 - `architecture.md` - アーキテクチャ
+- `testing.md` - テスト
 
 ## Skills
 

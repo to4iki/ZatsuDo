@@ -3,11 +3,14 @@ import SwiftUI
 
 public struct TaskListScreen: View {
   private let viewModel: TaskListViewModel
+  private let onPresentSetting: () -> Void
 
   public init(
-    viewModel: TaskListViewModel
+    viewModel: TaskListViewModel,
+    onPresentSetting: @escaping () -> Void
   ) {
     self.viewModel = viewModel
+    self.onPresentSetting = onPresentSetting
   }
 
   public var body: some View {
@@ -20,10 +23,17 @@ public struct TaskListScreen: View {
       )
       .navigationTitle(String(localized: "Today", bundle: .module))
       .navigationBarTitleDisplayMode(.large)
+      .toolbar {
+        ToolbarItem(placement: .topBarTrailing) {
+          Button(action: onPresentSetting) {
+            Image(systemName: "gearshape")
+          }
+        }
+      }
     }
   }
 }
 
 #Preview {
-  TaskListScreen(viewModel: .init())
+  TaskListScreen(viewModel: .init(), onPresentSetting: {})
 }

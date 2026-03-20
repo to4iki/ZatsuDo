@@ -24,6 +24,7 @@ let package = Package(
         "TaskFeature",
         "SettingFeature",
         "OnboardingFeature",
+        "AppStorage",
       ],
       path: "./Sources/Feature/App"
     ),
@@ -37,6 +38,9 @@ let package = Package(
     ),
     .target(
       name: "SettingFeature",
+      dependencies: [
+        "AppStorage"
+      ],
       path: "./Sources/Feature/Setting"
     ),
     .target(
@@ -52,11 +56,32 @@ let package = Package(
 
     // -- Core Layer ---
     .target(
+      name: "AppStorage",
+      path: "./Sources/Core/AppStorage"
+    ),
+    .target(
       name: "SharedModel",
       dependencies: [
         .product(name: "UtilType", package: "AppLibrary")
       ],
       path: "./Sources/Core/SharedModel"
+    ),
+
+    // -- Test --
+    .testTarget(
+      name: "AppFeatureTests",
+      dependencies: ["AppFeature", "AppStorage"],
+      path: "./Tests/Feature/App"
+    ),
+    .testTarget(
+      name: "OnboardingFeatureTests",
+      dependencies: ["OnboardingFeature"],
+      path: "./Tests/Feature/Onboarding"
+    ),
+    .testTarget(
+      name: "SettingFeatureTests",
+      dependencies: ["SettingFeature", "AppStorage"],
+      path: "./Tests/Feature/Setting"
     ),
   ]
 )

@@ -1,6 +1,39 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "ResetSectionHeader" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全消去の設定"
+          }
+        }
+      }
+    },
+    "ResetTime" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リセット時刻"
+          }
+        }
+      }
+    },
+    "ResetTimeDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定した時刻になると、未完了のタスクを含めすべてのタスクが自動的に消去されます。"
+          }
+        }
+      }
+    },
     "Setting" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -11,9 +44,6 @@
           }
         }
       }
-    },
-    "TODO" : {
-
     }
   },
   "version" : "1.1"

@@ -65,21 +65,22 @@ SettingFeature → AppStorage
   - インプットとなる Actionメソッド と、アウトプットの UiState をまとめる
 
 ```swift
-// Screen の例（TaskListScreen）
-// ViewModel は親（AppView）が保持し、UiState と Action クロージャを渡す
-public struct TaskListScreen: View {
-  private let viewModel: TaskListViewModel
+// Screen の例（SettingScreen）
+// ViewModel を保持し、UiState とイベントコールバックを View に渡す
+public struct SettingScreen: View {
+  private let viewModel: SettingViewModel
 
-  public init(
-    viewModel: TaskListViewModel
-  ) {
+  public init(viewModel: SettingViewModel) {
     self.viewModel = viewModel
   }
 
   public var body: some View {
     NavigationStack {
-      TaskListView(uiState: viewModel.uiState)
-        .navigationTitle(String(localized: "TaskList", bundle: .module))
+      SettingView(
+        uiState: viewModel.uiState,
+        onUpdateResetTime: { viewModel.updateResetTime($0) }
+      )
+      .navigationTitle(String(localized: "Setting", bundle: .module))
     }
   }
 }

@@ -1,3 +1,5 @@
+import AppStorage
+import Dependencies
 import SwiftUI
 
 public struct SettingScreen: View {
@@ -19,5 +21,9 @@ public struct SettingScreen: View {
 }
 
 #Preview {
-  SettingScreen(viewModel: .init())
+  withDependencies {
+    $0.appSettingsClient = .previewValue
+  } operation: {
+    SettingScreen(viewModel: .init())
+  }
 }

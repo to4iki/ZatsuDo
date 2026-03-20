@@ -1,4 +1,5 @@
 import AppStorage
+import Dependencies
 import Foundation
 import SettingFeature
 import Testing
@@ -6,58 +7,72 @@ import Testing
 @MainActor
 @Suite
 struct SettingViewModelTests {
-  private let suiteName = "SettingViewModelTests"
-
-  init() {
-    UserDefaults.standard.removePersistentDomain(forName: suiteName)
-  }
-
   @Test
-  func updateResetTime_persistsToStore() {
-    let defaults = UserDefaults(suiteName: suiteName)!
-    let store = AppSettingsStore(defaults: defaults)
-    let viewModel = SettingViewModel(store: store)
+  func updateResetTime_persistsToClient() {
+    var savedHour: Int?
+    var savedMinute: Int?
 
-    var components = DateComponents()
-    components.hour = 7
-    components.minute = 30
-    let date = Calendar.current.date(from: components)!
+    withDependencies {
+      $0.appSettingsClient.fetchResetHour = { AppSettingsClient.defaultResetHour }
+      $0.appSettingsClient.fetchResetMinute = { AppSettingsClient.defaultResetMinute }
+      $0.appSettingsClient.setResetHour = { savedHour = $0 }
+      $0.appSettingsClient.setResetMinute = { savedMinute = $0 }
+    } operation: {
+      let viewModel = SettingViewModel()
 
-    viewModel.updateResetTime(date)
+      var components = DateComponents()
+      components.hour = 7
+      components.minute = 30
+      let date = Calendar.current.date(from: components)!
 
-    #expect(viewModel.uiState.resetHour == 7)
-    #expect(viewModel.uiState.resetMinute == 30)
-    #expect(store.resetHour == 7)
-    #expect(store.resetMinute == 30)
+      viewModel.updateResetTime(date)
+
+      #expect(viewModel.uiState.resetHour == 7)
+      #expect(viewModel.uiState.resetMinute == 30)
+      #expect(savedHour == 7)
+      #expect(savedMinute == 30)
+    }
   }
 
   @Test
   func updateResetTime_skipsWhenValueUnchanged() {
-    let defaults = UserDefaults(suiteName: suiteName)!
-    let store = AppSettingsStore(defaults: defaults)
-    let viewModel = SettingViewModel(store: store)
+    var setHourCallCount = 0
+    var setMinuteCallCount = 0
 
-    let initialHour = viewModel.uiState.resetHour
-    let initialMinute = viewModel.uiState.resetMinute
+    withDependencies {
+      $0.appSettingsClient.fetchResetHour = { AppSettingsClient.defaultResetHour }
+      $0.appSettingsClient.fetchResetMinute = { AppSettingsClient.defaultResetMinute }
+      $0.appSettingsClient.setResetHour = { _ in setHourCallCount += 1 }
+      $0.appSettingsClient.setResetMinute = { _ in setMinuteCallCount += 1 }
+    } operation: {
+      let viewModel = SettingViewModel()
 
-    var components = DateComponents()
-    components.hour = initialHour
-    components.minute = initialMinute
-    let sameDate = Calendar.current.date(from: components)!
+      let initialHour = viewModel.uiState.resetHour
+      let initialMinute = viewModel.uiState.resetMinute
 
-    viewModel.updateResetTime(sameDate)
+      var components = DateComponents()
+      components.hour = initialHour
+      components.minute = initialMinute
+      let sameDate = Calendar.current.date(from: components)!
 
-    #expect(viewModel.uiState.resetHour == initialHour)
-    #expect(viewModel.uiState.resetMinute == initialMinute)
+      viewModel.updateResetTime(sameDate)
+
+      #expect(viewModel.uiState.resetHour == initialHour)
+      #expect(viewModel.uiState.resetMinute == initialMinute)
+      #expect(setHourCallCount == 0)
+      #expect(setMinuteCallCount == 0)
+    }
   }
 
   @Test
   func init_loadsDefaultValues() {
-    let defaults = UserDefaults(suiteName: suiteName)!
-    let store = AppSettingsStore(defaults: defaults)
-    let viewModel = SettingViewModel(store: store)
+    withDependencies {
+      $0.appSettingsClient = .testValue
+    } operation: {
+      let viewModel = SettingViewModel()
 
-    #expect(viewModel.uiState.resetHour == AppSettingsStore.defaultResetHour)
-    #expect(viewModel.uiState.resetMinute == AppSettingsStore.defaultResetMinute)
+      #expect(viewModel.uiState.resetHour == AppSettingsClient.defaultResetHour)
+      #expect(viewModel.uiState.resetMinute == AppSettingsClient.defaultResetMinute)
+    }
   }
 }

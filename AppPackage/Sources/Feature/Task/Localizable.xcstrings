@@ -23,6 +23,28 @@
         }
       }
     },
+    "NoTasks" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "タスクがありません"
+          }
+        }
+      }
+    },
+    "NoTasksDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下の入力欄からタスクを追加しましょう"
+          }
+        }
+      }
+    },
     "UntilReset %@" : {
       "extractionState" : "manual",
       "localizations" : {

@@ -37,6 +37,8 @@ struct OnboardingView: View {
       .padding(.top, 8)
     }
     .opacity(uiState.isLastPage ? 0 : 1)
+    .disabled(uiState.isLastPage)
+    .accessibilityHidden(uiState.isLastPage)
   }
 
   private var pageContent: some View {
@@ -68,7 +70,9 @@ struct OnboardingView: View {
       if uiState.isLastPage {
         onComplete()
       } else {
-        onAdvance()
+        withAnimation {
+          onAdvance()
+        }
       }
     }) {
       Text(

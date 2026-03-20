@@ -43,6 +43,15 @@ struct TaskListView: View {
       }
     }
     .listStyle(.insetGrouped)
+    .overlay {
+      if uiState.tasks.isEmpty {
+        ContentUnavailableView(
+          String(localized: "NoTasks", bundle: .module),
+          systemImage: "checklist",
+          description: Text(String(localized: "NoTasksDescription", bundle: .module))
+        )
+      }
+    }
     .safeAreaInset(edge: .bottom) {
       Color.clear.frame(height: 80)
     }

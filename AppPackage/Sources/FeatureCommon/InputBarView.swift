@@ -20,6 +20,7 @@ public struct InputBarView: View {
       Image(systemName: "mic")
         .font(.system(size: 20))
         .foregroundStyle(DesignSystem.Color.actionInactive)
+        .accessibilityHidden(true)
 
       TextField(placeholder, text: text)
         .submitLabel(.send)

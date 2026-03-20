@@ -18,6 +18,14 @@ UI実装には SwiftUI を利用する。
 
 - `make swiftformat` - フォーマット
 
+## ビルド・テスト検証
+
+コード変更後のビルド確認には Xcode MCP を使用する。`xcodebuild` コマンドは利用しないこと。
+
+1. `mcp__xcode__XcodeListWindows` で対象の `tabIdentifier` を取得する
+2. `mcp__xcode__BuildProject` でビルドを実行する
+3. テスト実行には `mcp__xcode__RunAllTests` または `mcp__xcode__RunSomeTests` を使用する
+
 ## Moduler Rules
 
 - `code-style.md` - コードスタイル

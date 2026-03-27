@@ -22,7 +22,7 @@ public struct SettingScreen: View {
 
 #Preview {
   withDependencies {
-    $0.appSettingsClient = .previewValue
+    $0.resetTimeClient = .previewValue
   } operation: {
     SettingScreen(viewModel: .init())
   }

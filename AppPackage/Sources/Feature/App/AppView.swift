@@ -41,7 +41,8 @@ public struct AppView: View {
 
 #Preview {
   let _ = prepareDependencies {
-    $0.appSettingsClient = .previewValue
+    $0.onboardingClient = .previewValue
+    $0.resetTimeClient = .previewValue
   }
   AppView()
 }

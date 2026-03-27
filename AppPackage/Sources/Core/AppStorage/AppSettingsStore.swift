@@ -20,13 +20,13 @@ final class AppSettingsStore: @unchecked Sendable {
   // MARK: - Reset Time
 
   var resetHour: Int {
-    get { defaults.object(forKey: Keys.resetHour) as? Int ?? AppSettingsClient.defaultResetHour }
+    get { defaults.object(forKey: Keys.resetHour) as? Int ?? ResetTimeClient.defaultHour }
     set { defaults.set(newValue, forKey: Keys.resetHour) }
   }
 
   var resetMinute: Int {
     get {
-      defaults.object(forKey: Keys.resetMinute) as? Int ?? AppSettingsClient.defaultResetMinute
+      defaults.object(forKey: Keys.resetMinute) as? Int ?? ResetTimeClient.defaultMinute
     }
     set { defaults.set(newValue, forKey: Keys.resetMinute) }
   }

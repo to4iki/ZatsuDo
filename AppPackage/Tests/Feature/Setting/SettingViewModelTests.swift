@@ -13,10 +13,10 @@ struct SettingViewModelTests {
     var savedMinute: Int?
 
     withDependencies {
-      $0.appSettingsClient.fetchResetHour = { AppSettingsClient.defaultResetHour }
-      $0.appSettingsClient.fetchResetMinute = { AppSettingsClient.defaultResetMinute }
-      $0.appSettingsClient.setResetHour = { savedHour = $0 }
-      $0.appSettingsClient.setResetMinute = { savedMinute = $0 }
+      $0.resetTimeClient.fetchHour = { ResetTimeClient.defaultHour }
+      $0.resetTimeClient.fetchMinute = { ResetTimeClient.defaultMinute }
+      $0.resetTimeClient.setHour = { savedHour = $0 }
+      $0.resetTimeClient.setMinute = { savedMinute = $0 }
     } operation: {
       let viewModel = SettingViewModel()
 
@@ -40,10 +40,10 @@ struct SettingViewModelTests {
     var setMinuteCallCount = 0
 
     withDependencies {
-      $0.appSettingsClient.fetchResetHour = { AppSettingsClient.defaultResetHour }
-      $0.appSettingsClient.fetchResetMinute = { AppSettingsClient.defaultResetMinute }
-      $0.appSettingsClient.setResetHour = { _ in setHourCallCount += 1 }
-      $0.appSettingsClient.setResetMinute = { _ in setMinuteCallCount += 1 }
+      $0.resetTimeClient.fetchHour = { ResetTimeClient.defaultHour }
+      $0.resetTimeClient.fetchMinute = { ResetTimeClient.defaultMinute }
+      $0.resetTimeClient.setHour = { _ in setHourCallCount += 1 }
+      $0.resetTimeClient.setMinute = { _ in setMinuteCallCount += 1 }
     } operation: {
       let viewModel = SettingViewModel()
 
@@ -67,13 +67,13 @@ struct SettingViewModelTests {
   @Test
   func init_loadsDefaultValues() {
     withDependencies {
-      $0.appSettingsClient.fetchResetHour = { AppSettingsClient.defaultResetHour }
-      $0.appSettingsClient.fetchResetMinute = { AppSettingsClient.defaultResetMinute }
+      $0.resetTimeClient.fetchHour = { ResetTimeClient.defaultHour }
+      $0.resetTimeClient.fetchMinute = { ResetTimeClient.defaultMinute }
     } operation: {
       let viewModel = SettingViewModel()
 
-      #expect(viewModel.uiState.resetHour == AppSettingsClient.defaultResetHour)
-      #expect(viewModel.uiState.resetMinute == AppSettingsClient.defaultResetMinute)
+      #expect(viewModel.uiState.resetHour == ResetTimeClient.defaultHour)
+      #expect(viewModel.uiState.resetMinute == ResetTimeClient.defaultMinute)
     }
   }
 }

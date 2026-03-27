@@ -12,8 +12,8 @@ struct AppViewModelTests {
     var didSetOnboardingCompleted = false
 
     withDependencies {
-      $0.appSettingsClient.fetchIsOnboardingCompleted = { false }
-      $0.appSettingsClient.setIsOnboardingCompleted = { _ in didSetOnboardingCompleted = true }
+      $0.onboardingClient.fetchIsCompleted = { false }
+      $0.onboardingClient.setIsCompleted = { _ in didSetOnboardingCompleted = true }
     } operation: {
       let viewModel = AppViewModel()
 
@@ -29,7 +29,7 @@ struct AppViewModelTests {
   @Test
   func presentSetting_updatesFlag() {
     withDependencies {
-      $0.appSettingsClient.fetchIsOnboardingCompleted = { false }
+      $0.onboardingClient.fetchIsCompleted = { false }
     } operation: {
       let viewModel = AppViewModel()
 
@@ -44,7 +44,7 @@ struct AppViewModelTests {
   @Test
   func init_restoresOnboardingStateFromClient() {
     withDependencies {
-      $0.appSettingsClient.fetchIsOnboardingCompleted = { true }
+      $0.onboardingClient.fetchIsCompleted = { true }
     } operation: {
       let viewModel = AppViewModel()
 

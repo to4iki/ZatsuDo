@@ -4,24 +4,25 @@ import Foundation
 import Observation
 
 public struct AppUiState: Sendable, Equatable {
-  public var isOnboardingCompleted: Bool
+  public var isOnboardingCompleted: Bool = false
 }
 
 @Observable
 @MainActor
 public final class AppViewModel {
   @ObservationIgnored
-  @Dependency(\.appSettingsClient) private var client
+  @Dependency(\.onboardingClient) private var client
 
   public private(set) var uiState: AppUiState
   public var isSettingPresented: Bool = false
 
   public init() {
-    self.uiState = AppUiState(isOnboardingCompleted: client.fetchIsOnboardingCompleted())
+    @Dependency(\.onboardingClient) var onboardingClient
+    self.uiState = AppUiState(isOnboardingCompleted: onboardingClient.fetchIsCompleted())
   }
 
   public func completeOnboarding() {
-    client.setIsOnboardingCompleted(true)
+    client.setIsCompleted(true)
     uiState.isOnboardingCompleted = true
   }
 

@@ -40,9 +40,8 @@ public struct AppView: View {
 }
 
 #Preview {
-  withDependencies {
+  let _ = prepareDependencies {
     $0.appSettingsClient = .previewValue
-  } operation: {
-    AppView()
   }
+  AppView()
 }

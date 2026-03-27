@@ -67,7 +67,8 @@ struct SettingViewModelTests {
   @Test
   func init_loadsDefaultValues() {
     withDependencies {
-      $0.appSettingsClient = .testValue
+      $0.appSettingsClient.fetchResetHour = { AppSettingsClient.defaultResetHour }
+      $0.appSettingsClient.fetchResetMinute = { AppSettingsClient.defaultResetMinute }
     } operation: {
       let viewModel = SettingViewModel()
 

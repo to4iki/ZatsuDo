@@ -29,7 +29,7 @@ struct AppViewModelTests {
   @Test
   func presentSetting_updatesFlag() {
     withDependencies {
-      $0.appSettingsClient = .testValue
+      $0.appSettingsClient.fetchIsOnboardingCompleted = { false }
     } operation: {
       let viewModel = AppViewModel()
 

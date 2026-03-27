@@ -5,14 +5,14 @@ import DependenciesMacros
 public struct AppSettingsClient: Sendable {
   // MARK: - Onboarding
 
-  public var fetchIsOnboardingCompleted: @Sendable () -> Bool = { false }
+  public var fetchIsOnboardingCompleted: @Sendable () -> Bool
   public var setIsOnboardingCompleted: @Sendable (Bool) -> Void
 
   // MARK: - Reset Time
 
-  public var fetchResetHour: @Sendable () -> Int = { defaultResetHour }
+  public var fetchResetHour: @Sendable () -> Int
   public var setResetHour: @Sendable (Int) -> Void
-  public var fetchResetMinute: @Sendable () -> Int = { defaultResetMinute }
+  public var fetchResetMinute: @Sendable () -> Int
   public var setResetMinute: @Sendable (Int) -> Void
 
   // MARK: - Defaults

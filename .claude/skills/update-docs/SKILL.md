@@ -13,7 +13,13 @@ allowed-tools: Read, Glob, Grep, Edit, Write, Bash
 ### ルートドキュメント
 
 - `README.md` - プロジェクト概要
-- `CLAUDE.md` - AI開発ガイド（ルートおよび各サブディレクトリ）
+- `CLAUDE.md` - AI開発ガイド（ルート）
+
+### サブディレクトリの CLAUDE.md
+
+- `AppPackage/CLAUDE.md` - AppPackage の開発ガイド
+- `AppLibrary/CLAUDE.md` - AppLibrary の開発ガイド
+- `docs/CLAUDE.md` - docs/ のナビゲーションガイド
 
 ### docs/ディレクトリ
 
@@ -25,16 +31,19 @@ allowed-tools: Read, Glob, Grep, Edit, Write, Bash
 ## 更新手順
 
 1. **現状把握** - 現在のコードベース構造を確認
-   - ディレクトリ構造
+   - ディレクトリ構造（Glob でファイル一覧を取得）
    - 主要な機能・コンポーネント
-   - 依存関係（Package.swift）
+   - 依存関係（`AppPackage/Package.swift`、`AppLibrary/Package.swift`）
+   - 開発コマンド（`Makefile`）
 
-2. **既存ドキュメント確認** - 現在のREADME.md、CLAUDE.md、docs/内のファイルを読む
+2. **既存ドキュメント確認** - 対象ファイルをすべて読む
+   - `README.md`、`CLAUDE.md`（ルートおよびサブディレクトリ）
+   - `docs/` 配下のすべてのファイル
 
 3. **差分分析** - コードと既存ドキュメントの差分を特定
-   - 新規追加された機能
-   - 削除された機能
-   - 開発コマンドの変更
+   - `git log --oneline -20` で直近の変更履歴を確認
+   - `git diff HEAD~5..HEAD -- '*.swift' '*.md' 'Package.swift'` で具体的な変更内容を把握
+   - 新規追加・削除された機能、モジュール、コマンドを洗い出す
 
 4. **更新内容の提案** - 変更が必要な箇所を一覧で提示し、ユーザーの承認を得る
 
@@ -48,12 +57,18 @@ allowed-tools: Read, Glob, Grep, Edit, Write, Bash
 - 開発環境のセットアップ手順を最新に保つ
 - 利用可能なコマンド一覧を正確に記載
 
-### CLAUDE.md
+### CLAUDE.md（ルート）
 
 - アーキテクチャの概要を維持
 - 重要な規約・パターンを文書化
 - 開発コマンドを最新に保つ
-- サブディレクトリのCLAUDE.mdとの整合性を確認
+- 各サブディレクトリの CLAUDE.md との整合性を確認
+
+### サブディレクトリの CLAUDE.md
+
+- **`AppPackage/CLAUDE.md`**: AppPackage 内のモジュール構成・規約・テスト方針を最新に保つ
+- **`AppLibrary/CLAUDE.md`**: AppLibrary 内のライブラリ構成・API概要を最新に保つ
+- **`docs/CLAUDE.md`**: docs/ 配下のドキュメント構成とナビゲーションを最新に保つ
 
 ### docs/ディレクトリ
 

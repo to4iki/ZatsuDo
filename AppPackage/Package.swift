@@ -14,7 +14,8 @@ let package = Package(
     )
   ],
   dependencies: [
-    .package(path: "../AppLibrary")
+    .package(path: "../AppLibrary"),
+    .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.9.0"),
   ],
   targets: [
     // -- Feature Layer --
@@ -57,6 +58,10 @@ let package = Package(
     // -- Core Layer ---
     .target(
       name: "AppStorage",
+      dependencies: [
+        .product(name: "Dependencies", package: "swift-dependencies"),
+        .product(name: "DependenciesMacros", package: "swift-dependencies"),
+      ],
       path: "./Sources/Core/AppStorage"
     ),
     .target(
@@ -70,7 +75,10 @@ let package = Package(
     // -- Test --
     .testTarget(
       name: "AppFeatureTests",
-      dependencies: ["AppFeature", "AppStorage"],
+      dependencies: [
+        "AppFeature",
+        .product(name: "Dependencies", package: "swift-dependencies"),
+      ],
       path: "./Tests/Feature/App"
     ),
     .testTarget(
@@ -80,7 +88,10 @@ let package = Package(
     ),
     .testTarget(
       name: "SettingFeatureTests",
-      dependencies: ["SettingFeature", "AppStorage"],
+      dependencies: [
+        "SettingFeature",
+        .product(name: "Dependencies", package: "swift-dependencies"),
+      ],
       path: "./Tests/Feature/Setting"
     ),
   ]

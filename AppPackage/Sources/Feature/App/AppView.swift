@@ -1,3 +1,5 @@
+import AppStorage
+import Dependencies
 import OnboardingFeature
 import SettingFeature
 import SwiftUI
@@ -38,5 +40,8 @@ public struct AppView: View {
 }
 
 #Preview {
+  let _ = prepareDependencies {
+    $0.appSettingsClient = .previewValue
+  }
   AppView()
 }

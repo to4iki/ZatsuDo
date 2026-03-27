@@ -40,14 +40,14 @@ Featureモジュール間の依存は禁止。Feature間の連携は `AppFeature
 
 | モジュール | 役割 |
 |---|---|
-| `AppStorage` | UserDefaults を抽象化したアプリ設定の永続化 |
+| `AppStorage` | アプリ設定の永続化。[swift-dependencies](https://github.com/pointfreeco/swift-dependencies) の `@DependencyClient` で `AppSettingsClient` を定義し、UserDefaults の実装詳細を隠蔽する |
 | `SharedModel` | Feature間で共有するモデル定義 |
 
 依存関係:
 
 ```
 AppFeature → TaskFeature → SharedModel
-AppFeature → AppStorage
+AppFeature → AppStorage → swift-dependencies
 SettingFeature → AppStorage
 ```
 

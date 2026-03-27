@@ -1,53 +1,54 @@
 import AppFeature
 import AppStorage
+import Dependencies
 import Foundation
 import Testing
 
 @MainActor
 @Suite
 struct AppViewModelTests {
-  private let suiteName = "AppViewModelTests"
-
-  init() {
-    UserDefaults.standard.removePersistentDomain(forName: suiteName)
-  }
-
   @Test
-  func completeOnboarding_updatesUiStateAndStore() {
-    let defaults = UserDefaults(suiteName: suiteName)!
-    let store = AppSettingsStore(defaults: defaults)
-    let viewModel = AppViewModel(store: store)
+  func completeOnboarding_updatesUiState() {
+    var didSetOnboardingCompleted = false
 
-    #expect(viewModel.uiState.isOnboardingCompleted == false)
-    #expect(store.isOnboardingCompleted == false)
+    withDependencies {
+      $0.appSettingsClient.fetchIsOnboardingCompleted = { false }
+      $0.appSettingsClient.setIsOnboardingCompleted = { _ in didSetOnboardingCompleted = true }
+    } operation: {
+      let viewModel = AppViewModel()
 
-    viewModel.completeOnboarding()
+      #expect(viewModel.uiState.isOnboardingCompleted == false)
 
-    #expect(viewModel.uiState.isOnboardingCompleted == true)
-    #expect(store.isOnboardingCompleted == true)
+      viewModel.completeOnboarding()
+
+      #expect(viewModel.uiState.isOnboardingCompleted == true)
+      #expect(didSetOnboardingCompleted == true)
+    }
   }
 
   @Test
   func presentSetting_updatesFlag() {
-    let defaults = UserDefaults(suiteName: suiteName)!
-    let store = AppSettingsStore(defaults: defaults)
-    let viewModel = AppViewModel(store: store)
+    withDependencies {
+      $0.appSettingsClient.fetchIsOnboardingCompleted = { false }
+    } operation: {
+      let viewModel = AppViewModel()
 
-    #expect(viewModel.isSettingPresented == false)
+      #expect(viewModel.isSettingPresented == false)
 
-    viewModel.presentSetting()
+      viewModel.presentSetting()
 
-    #expect(viewModel.isSettingPresented == true)
+      #expect(viewModel.isSettingPresented == true)
+    }
   }
 
   @Test
-  func init_restoresOnboardingStateFromStore() {
-    let defaults = UserDefaults(suiteName: suiteName)!
-    let store = AppSettingsStore(defaults: defaults)
-    store.isOnboardingCompleted = true
+  func init_restoresOnboardingStateFromClient() {
+    withDependencies {
+      $0.appSettingsClient.fetchIsOnboardingCompleted = { true }
+    } operation: {
+      let viewModel = AppViewModel()
 
-    let viewModel = AppViewModel(store: store)
-
-    #expect(viewModel.uiState.isOnboardingCompleted == true)
+      #expect(viewModel.uiState.isOnboardingCompleted == true)
+    }
   }
 }

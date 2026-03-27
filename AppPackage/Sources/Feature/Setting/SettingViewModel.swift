@@ -1,4 +1,5 @@
 import AppStorage
+import Dependencies
 import Foundation
 import Observation
 
@@ -17,23 +18,26 @@ public struct SettingUiState: Sendable, Equatable {
 @Observable
 @MainActor
 public final class SettingViewModel {
-  private let store: AppSettingsStore
+  @ObservationIgnored
+  @Dependency(\.appSettingsClient) private var client
 
   public private(set) var uiState: SettingUiState
 
-  public init(store: AppSettingsStore = .shared) {
-    self.store = store
-    self.uiState = SettingUiState(resetHour: store.resetHour, resetMinute: store.resetMinute)
+  public init() {
+    self.uiState = SettingUiState(
+      resetHour: client.fetchResetHour(),
+      resetMinute: client.fetchResetMinute()
+    )
   }
 
   public func updateResetTime(_ date: Date) {
     let components = Calendar.current.dateComponents([.hour, .minute], from: date)
-    let hour = components.hour ?? AppSettingsStore.defaultResetHour
-    let minute = components.minute ?? AppSettingsStore.defaultResetMinute
+    let hour = components.hour ?? AppSettingsClient.defaultResetHour
+    let minute = components.minute ?? AppSettingsClient.defaultResetMinute
     guard hour != uiState.resetHour || minute != uiState.resetMinute else { return }
     uiState.resetHour = hour
     uiState.resetMinute = minute
-    store.resetHour = hour
-    store.resetMinute = minute
+    client.setResetHour(hour)
+    client.setResetMinute(minute)
   }
 }

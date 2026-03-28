@@ -15,6 +15,7 @@ graph TD
   end
 
   subgraph AppLibrary
+    UtilType[UtilType/ID - 型安全なID]
     Logger[Logger - OSLogラッパー]
   end
 ```
@@ -46,10 +47,11 @@ Featureモジュール間の依存は禁止。Feature間の連携は `AppFeature
 依存関係:
 
 ```
-AppFeature → TaskFeature → SharedModel
-AppFeature → AppStorage → swift-dependencies
-SettingFeature → AppStorage (ResetTimeClient)
-OnboardingFeature → AppStorage (OnboardingClient)
+AppFeature → TaskFeature → SharedModel → UtilType (AppLibrary)
+                         → FeatureCommon
+AppFeature → SettingFeature → AppStorage → swift-dependencies
+AppFeature → OnboardingFeature
+AppFeature → AppStorage (OnboardingClient, ResetTimeClient)
 ```
 
 ## スクリーンアーキテクチャ

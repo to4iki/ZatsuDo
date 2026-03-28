@@ -76,6 +76,7 @@ private struct TaskRowView: View {
         Image(systemName: task.isDone ? "checkmark.circle.fill" : "circle")
           .font(.system(size: 22))
           .foregroundStyle(task.isDone ? Color.accentColor : Color.secondary)
+          .accessibilityHidden(true)
 
         Text(task.name)
           .strikethrough(task.isDone)

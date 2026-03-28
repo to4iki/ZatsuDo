@@ -2,7 +2,7 @@ import Foundation
 import Observation
 import SharedModel
 
-public struct TaskUiState: Sendable, Identifiable {
+public struct TaskUiState: Sendable, Identifiable, Equatable {
   public var id: ZatsuTask.ID
   public var name: String
   public var isDone: Bool
@@ -20,7 +20,7 @@ public struct TaskUiState: Sendable, Identifiable {
   }
 }
 
-public struct TaskListUiState: Sendable {
+public struct TaskListUiState: Sendable, Equatable {
   public var tasks: [TaskUiState] = []
   public var resetCountdown: String = ""
   public var inputText: String = ""

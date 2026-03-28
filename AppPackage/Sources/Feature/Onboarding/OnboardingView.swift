@@ -101,6 +101,7 @@ private struct OnboardingPageView: View {
       Image(systemName: iconName)
         .font(.system(size: 64))
         .foregroundStyle(Color.accentColor)
+        .accessibilityHidden(true)
       Text(title)
         .font(.title)
         .bold()

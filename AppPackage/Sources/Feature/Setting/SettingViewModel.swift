@@ -24,10 +24,9 @@ public final class SettingViewModel {
   public private(set) var uiState: SettingUiState
 
   public init() {
-    @Dependency(\.resetTimeClient) var resetTimeClient
     self.uiState = SettingUiState(
-      resetHour: resetTimeClient.fetchHour(),
-      resetMinute: resetTimeClient.fetchMinute()
+      resetHour: client.fetchHour(),
+      resetMinute: client.fetchMinute()
     )
   }
 

@@ -17,8 +17,7 @@ public final class AppViewModel {
   public var isSettingPresented: Bool = false
 
   public init() {
-    @Dependency(\.onboardingClient) var onboardingClient
-    self.uiState = AppUiState(isOnboardingCompleted: onboardingClient.fetchIsCompleted())
+    self.uiState = AppUiState(isOnboardingCompleted: client.fetchIsCompleted())
   }
 
   public func completeOnboarding() {

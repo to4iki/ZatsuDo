@@ -96,5 +96,10 @@ let package = Package(
       ],
       path: "./Tests/Feature/Setting"
     ),
+    .testTarget(
+      name: "TaskFeatureTests",
+      dependencies: ["TaskFeature"],
+      path: "./Tests/Feature/Task"
+    ),
   ]
 )

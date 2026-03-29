@@ -1,5 +1,6 @@
 import Dependencies
 import DependenciesMacros
+import Logger
 
 @DependencyClient
 public struct ResetTimeClient: Sendable {
@@ -19,9 +20,15 @@ extension ResetTimeClient: DependencyKey {
     let store = AppSettingsStore()
     return ResetTimeClient(
       fetchHour: { store.resetHour },
-      setHour: { store.resetHour = $0 },
+      setHour: {
+        Log.default.info("ResetTimeClient: setHour=\($0)")
+        store.resetHour = $0
+      },
       fetchMinute: { store.resetMinute },
-      setMinute: { store.resetMinute = $0 }
+      setMinute: {
+        Log.default.info("ResetTimeClient: setMinute=\($0)")
+        store.resetMinute = $0
+      }
     )
   }()
 

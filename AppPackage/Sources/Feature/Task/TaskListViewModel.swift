@@ -1,8 +1,9 @@
+import FeatureCommon
 import Foundation
 import Observation
 import SharedModel
 
-public struct TaskUiState: Sendable, Identifiable {
+public struct TaskUiState: Sendable, Identifiable, Equatable {
   public var id: ZatsuTask.ID
   public var name: String
   public var isDone: Bool
@@ -20,7 +21,7 @@ public struct TaskUiState: Sendable, Identifiable {
   }
 }
 
-public struct TaskListUiState: Sendable {
+public struct TaskListUiState: Sendable, Equatable {
   public var tasks: [TaskUiState] = []
   public var resetCountdown: String = ""
   public var inputText: String = ""
@@ -35,9 +36,11 @@ public final class TaskListViewModel {
 
   public func toggleTask(id: ZatsuTask.ID) {
     guard let index = uiState.tasks.firstIndex(where: { $0.id == id }) else {
+      Log.default.error("toggleTask: task not found id=\(id.rawValue)")
       return
     }
     uiState.tasks[index].isDone.toggle()
+    Log.default.debug("toggleTask: id=\(id.rawValue), isDone=\(self.uiState.tasks[index].isDone)")
   }
 
   public func updateInputText(_ text: String) {
@@ -56,5 +59,6 @@ public final class TaskListViewModel {
         isDone: false
       ))
     uiState.inputText = ""
+    Log.default.info("addTask: name=\(name, privacy: .private)")
   }
 }

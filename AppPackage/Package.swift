@@ -35,7 +35,7 @@ let package = Package(
         "FeatureCommon",
         "SharedModel",
       ],
-      path: "./Sources/Feature/Task",
+      path: "./Sources/Feature/Task"
     ),
     .target(
       name: "SettingFeature",
@@ -52,7 +52,8 @@ let package = Package(
       name: "FeatureCommon",
       dependencies: [
         .product(name: "Logger", package: "AppLibrary")
-      ]
+      ],
+      path: "./Sources/FeatureCommon"
     ),
 
     // -- Core Layer ---
@@ -61,6 +62,7 @@ let package = Package(
       dependencies: [
         .product(name: "Dependencies", package: "swift-dependencies"),
         .product(name: "DependenciesMacros", package: "swift-dependencies"),
+        .product(name: "Logger", package: "AppLibrary"),
       ],
       path: "./Sources/Core/AppStorage"
     ),

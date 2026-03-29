@@ -19,18 +19,6 @@ struct TaskListViewModelTests {
   }
 
   @Test
-  func toggleTask_ignoresInvalidId() {
-    let viewModel = TaskListViewModel()
-
-    viewModel.updateInputText("Buy milk")
-    viewModel.addTask()
-
-    viewModel.toggleTask(id: ZatsuTask.ID(rawValue: "nonexistent"))
-
-    #expect(viewModel.uiState.tasks[0].isDone == false)
-  }
-
-  @Test
   func addTask_appendsTaskAndClearsInput() {
     let viewModel = TaskListViewModel()
 

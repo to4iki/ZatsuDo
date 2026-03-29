@@ -1,5 +1,6 @@
 import Dependencies
 import DependenciesMacros
+import Logger
 
 @DependencyClient
 public struct OnboardingClient: Sendable {
@@ -12,7 +13,10 @@ extension OnboardingClient: DependencyKey {
     let store = AppSettingsStore()
     return OnboardingClient(
       fetchIsCompleted: { store.isOnboardingCompleted },
-      setIsCompleted: { store.isOnboardingCompleted = $0 }
+      setIsCompleted: {
+        Log.default.info("OnboardingClient: setIsCompleted=\($0)")
+        store.isOnboardingCompleted = $0
+      }
     )
   }()
 

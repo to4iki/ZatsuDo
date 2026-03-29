@@ -36,6 +36,7 @@ public final class TaskListViewModel {
 
   public func toggleTask(id: ZatsuTask.ID) {
     guard let index = uiState.tasks.firstIndex(where: { $0.id == id }) else {
+      Log.default.error("toggleTask: task not found id=\(id.rawValue)")
       return
     }
     uiState.tasks[index].isDone.toggle()
@@ -58,6 +59,6 @@ public final class TaskListViewModel {
         isDone: false
       ))
     uiState.inputText = ""
-    Log.default.debug("addTask: name=\(name)")
+    Log.default.info("addTask: name=\(name, privacy: .private)")
   }
 }

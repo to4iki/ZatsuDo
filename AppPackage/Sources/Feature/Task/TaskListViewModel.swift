@@ -1,3 +1,4 @@
+import FeatureCommon
 import Foundation
 import Observation
 import SharedModel
@@ -38,6 +39,7 @@ public final class TaskListViewModel {
       return
     }
     uiState.tasks[index].isDone.toggle()
+    Log.default.debug("toggleTask: id=\(id.rawValue), isDone=\(self.uiState.tasks[index].isDone)")
   }
 
   public func updateInputText(_ text: String) {
@@ -56,5 +58,6 @@ public final class TaskListViewModel {
         isDone: false
       ))
     uiState.inputText = ""
+    Log.default.debug("addTask: name=\(name)")
   }
 }

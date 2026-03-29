@@ -35,7 +35,7 @@ let package = Package(
         "FeatureCommon",
         "SharedModel",
       ],
-      path: "./Sources/Feature/Task",
+      path: "./Sources/Feature/Task"
     ),
     .target(
       name: "SettingFeature",

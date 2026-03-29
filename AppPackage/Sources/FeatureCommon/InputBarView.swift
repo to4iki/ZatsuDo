@@ -1,3 +1,4 @@
+import Logger
 import SwiftUI
 
 public struct InputBarView: View {
@@ -24,9 +25,15 @@ public struct InputBarView: View {
 
       TextField(placeholder, text: text)
         .submitLabel(.send)
-        .onSubmit { onSubmit() }
+        .onSubmit {
+          Log.default.debug("InputBarView: submitted via keyboard")
+          onSubmit()
+        }
 
-      Button(action: onSubmit) {
+      Button(action: {
+        Log.default.debug("InputBarView: submitted via button")
+        onSubmit()
+      }) {
         Image(systemName: "arrow.up.circle.fill")
           .font(.system(size: 28))
           .foregroundStyle(

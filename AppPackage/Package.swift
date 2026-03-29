@@ -50,6 +50,9 @@ let package = Package(
     ),
     .target(
       name: "FeatureCommon",
+      dependencies: [
+        .product(name: "Logger", package: "AppLibrary")
+      ],
       path: "./Sources/FeatureCommon"
     ),
 

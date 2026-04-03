@@ -70,8 +70,8 @@ struct TaskListView: View {
             ? "line.3.horizontal.decrease.circle.fill"
             : "line.3.horizontal.decrease.circle"
         )
-        .font(.caption)
-        .foregroundStyle(.secondary)
+        .font(.body)
+        .foregroundStyle(uiState.showsCompletedTasks ? Color.accentColor : .secondary)
       }
       .buttonStyle(.plain)
     }

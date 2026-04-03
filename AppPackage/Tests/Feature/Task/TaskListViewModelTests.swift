@@ -41,4 +41,58 @@ struct TaskListViewModelTests {
     viewModel.addTask()
     #expect(viewModel.uiState.tasks.isEmpty)
   }
+
+  @Test
+  func addTask_setsCreatedAt() {
+    let viewModel = TaskListViewModel()
+    let before = Date().timeIntervalSince1970
+
+    viewModel.updateInputText("Timed task")
+    viewModel.addTask()
+
+    let after = Date().timeIntervalSince1970
+    let createdAt = viewModel.uiState.tasks[0].createdAt
+    #expect(createdAt >= before)
+    #expect(createdAt <= after)
+  }
+
+  @Test
+  func visibleTasks_hidesCompletedByDefault() {
+    let viewModel = TaskListViewModel()
+
+    viewModel.updateInputText("Task A")
+    viewModel.addTask()
+    viewModel.updateInputText("Task B")
+    viewModel.addTask()
+
+    let taskAId = viewModel.uiState.tasks[0].id
+    viewModel.toggleTask(id: taskAId)
+
+    #expect(viewModel.uiState.tasks.count == 2)
+    #expect(viewModel.uiState.visibleTasks.count == 1)
+    #expect(viewModel.uiState.visibleTasks[0].name == "Task B")
+  }
+
+  @Test
+  func toggleShowCompletedTasks_togglesVisibility() {
+    let viewModel = TaskListViewModel()
+
+    viewModel.updateInputText("Task A")
+    viewModel.addTask()
+
+    let taskId = viewModel.uiState.tasks[0].id
+    viewModel.toggleTask(id: taskId)
+
+    #expect(viewModel.uiState.visibleTasks.count == 0)
+
+    viewModel.toggleShowCompletedTasks()
+
+    #expect(viewModel.uiState.showsCompletedTasks == true)
+    #expect(viewModel.uiState.visibleTasks.count == 1)
+
+    viewModel.toggleShowCompletedTasks()
+
+    #expect(viewModel.uiState.showsCompletedTasks == false)
+    #expect(viewModel.uiState.visibleTasks.count == 0)
+  }
 }

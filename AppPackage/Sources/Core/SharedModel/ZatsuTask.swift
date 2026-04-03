@@ -1,3 +1,4 @@
+import Foundation
 import ID
 
 public struct ZatsuTask: Equatable, Hashable, Sendable, Identifiable {
@@ -12,11 +13,13 @@ public struct ZatsuTask: Equatable, Hashable, Sendable, Identifiable {
   public let id: ID
   public let name: String
   public let isDone: Bool
+  public let createdAt: TimeInterval
 
-  public init(id: ID, name: String, isDone: Bool) {
+  public init(id: ID, name: String, isDone: Bool, createdAt: TimeInterval) {
     self.id = id
     self.name = name
     self.isDone = isDone
+    self.createdAt = createdAt
   }
 }
 
@@ -24,6 +27,6 @@ public struct ZatsuTask: Equatable, Hashable, Sendable, Identifiable {
 
 extension ZatsuTask {
   public static func mock(_ name: String) -> Self {
-    Self(id: "id_\(name)", name: name, isDone: false)
+    Self(id: "id_\(name)", name: name, isDone: false, createdAt: Date().timeIntervalSince1970)
   }
 }

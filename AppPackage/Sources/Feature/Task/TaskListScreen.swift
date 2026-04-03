@@ -18,6 +18,7 @@ public struct TaskListScreen: View {
       TaskListView(
         uiState: viewModel.uiState,
         onToggleTask: { viewModel.toggleTask(id: $0) },
+        onToggleShowCompleted: { viewModel.toggleShowCompletedTasks() },
         onUpdateInputText: { viewModel.updateInputText($0) },
         onAddTask: { viewModel.addTask() }
       )

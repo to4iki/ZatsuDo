@@ -5,17 +5,20 @@ import SwiftUI
 struct TaskListView: View {
   private let uiState: TaskListUiState
   private let onToggleTask: (ZatsuTask.ID) -> Void
+  private let onToggleShowCompleted: () -> Void
   private let onUpdateInputText: (String) -> Void
   private let onAddTask: () -> Void
 
   init(
     uiState: TaskListUiState,
     onToggleTask: @escaping (ZatsuTask.ID) -> Void,
+    onToggleShowCompleted: @escaping () -> Void,
     onUpdateInputText: @escaping (String) -> Void,
     onAddTask: @escaping () -> Void
   ) {
     self.uiState = uiState
     self.onToggleTask = onToggleTask
+    self.onToggleShowCompleted = onToggleShowCompleted
     self.onUpdateInputText = onUpdateInputText
     self.onAddTask = onAddTask
   }
@@ -31,20 +34,16 @@ struct TaskListView: View {
   private var taskList: some View {
     List {
       Section {
-        ForEach(uiState.tasks) { task in
+        ForEach(uiState.visibleTasks) { task in
           TaskRowView(task: task, onToggle: { onToggleTask(task.id) })
         }
       } header: {
-        if !uiState.resetCountdown.isEmpty {
-          Text(String(localized: "UntilReset \(uiState.resetCountdown)", bundle: .module))
-            .font(.caption)
-            .foregroundStyle(.secondary)
-        }
+        sectionHeader
       }
     }
     .listStyle(.insetGrouped)
     .overlay {
-      if uiState.tasks.isEmpty {
+      if uiState.visibleTasks.isEmpty {
         ContentUnavailableView(
           String(localized: "NoTasks", bundle: .module),
           systemImage: "checklist",
@@ -54,6 +53,27 @@ struct TaskListView: View {
     }
     .safeAreaInset(edge: .bottom) {
       Color.clear.frame(height: 80)
+    }
+  }
+
+  private var sectionHeader: some View {
+    HStack {
+      if !uiState.resetCountdown.isEmpty {
+        Text(String(localized: "UntilReset \(uiState.resetCountdown)", bundle: .module))
+          .font(.caption)
+          .foregroundStyle(.secondary)
+      }
+      Spacer()
+      Button(action: onToggleShowCompleted) {
+        Image(
+          systemName: uiState.showsCompletedTasks
+            ? "line.3.horizontal.decrease.circle.fill"
+            : "line.3.horizontal.decrease.circle"
+        )
+        .font(.body)
+        .foregroundStyle(uiState.showsCompletedTasks ? Color.accentColor : .secondary)
+      }
+      .buttonStyle(.plain)
     }
   }
 
@@ -78,9 +98,15 @@ private struct TaskRowView: View {
           .foregroundStyle(task.isDone ? Color.accentColor : Color.secondary)
           .accessibilityHidden(true)
 
-        Text(task.name)
-          .strikethrough(task.isDone)
-          .foregroundStyle(task.isDone ? Color.secondary : Color.primary)
+        VStack(alignment: .leading, spacing: 2) {
+          Text(task.name)
+            .strikethrough(task.isDone)
+            .foregroundStyle(task.isDone ? Color.secondary : Color.primary)
+
+          Text(task.formattedCreatedAt)
+            .font(.caption2)
+            .foregroundStyle(.tertiary)
+        }
 
         Spacer()
       }
@@ -93,11 +119,12 @@ private struct TaskRowView: View {
   TaskListView(
     uiState: .init(
       tasks: [
-        TaskUiState(id: "1", name: "test", isDone: false)
+        TaskUiState(id: "1", name: "test", isDone: false, createdAt: Date().timeIntervalSince1970)
       ],
       resetCountdown: "8h 30m"
     ),
     onToggleTask: { _ in },
+    onToggleShowCompleted: {},
     onUpdateInputText: { _ in },
     onAddTask: {}
   )

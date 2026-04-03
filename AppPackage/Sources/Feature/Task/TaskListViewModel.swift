@@ -7,27 +7,21 @@ public struct TaskUiState: Sendable, Identifiable, Equatable {
   public var id: ZatsuTask.ID
   public var name: String
   public var isDone: Bool
-  public var createdAt: TimeInterval
+  public var createdAtText: String
 
-  public var formattedCreatedAt: String {
-    let date = Date(timeIntervalSince1970: createdAt)
-    let formatter = DateFormatter()
-    formatter.dateFormat = "yyyy-MM-dd HH:mm"
-    return formatter.string(from: date)
-  }
-
-  public init(id: ZatsuTask.ID, name: String, isDone: Bool, createdAt: TimeInterval) {
+  public init(id: ZatsuTask.ID, name: String, isDone: Bool, createdAtText: String) {
     self.id = id
     self.name = name
     self.isDone = isDone
-    self.createdAt = createdAt
+    self.createdAtText = createdAtText
   }
 
   init(from model: ZatsuTask) {
     self.id = model.id
     self.name = model.name
     self.isDone = model.isDone
-    self.createdAt = model.createdAt
+    self.createdAtText = DateFormatText.yyyyMdHHmm(
+      from: Date(timeIntervalSince1970: model.createdAt))
   }
 }
 
@@ -82,7 +76,7 @@ public final class TaskListViewModel {
         id: .init(rawValue: UUID().uuidString),
         name: name,
         isDone: false,
-        createdAt: Date().timeIntervalSince1970
+        createdAtText: DateFormatText.yyyyMdHHmm(from: Date())
       ))
     uiState.inputText = ""
     Log.default.info("addTask: name=\(name, privacy: .private)")

@@ -43,20 +43,6 @@ struct TaskListViewModelTests {
   }
 
   @Test
-  func addTask_setsCreatedAt() {
-    let viewModel = TaskListViewModel()
-    let before = Date().timeIntervalSince1970
-
-    viewModel.updateInputText("Timed task")
-    viewModel.addTask()
-
-    let after = Date().timeIntervalSince1970
-    let createdAt = viewModel.uiState.tasks[0].createdAt
-    #expect(createdAt >= before)
-    #expect(createdAt <= after)
-  }
-
-  @Test
   func visibleTasks_hidesCompletedByDefault() {
     let viewModel = TaskListViewModel()
 

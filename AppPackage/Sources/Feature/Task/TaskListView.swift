@@ -103,7 +103,7 @@ private struct TaskRowView: View {
             .strikethrough(task.isDone)
             .foregroundStyle(task.isDone ? Color.secondary : Color.primary)
 
-          Text(task.formattedCreatedAt)
+          Text(task.createdAtText)
             .font(.caption2)
             .foregroundStyle(.tertiary)
         }
@@ -119,7 +119,12 @@ private struct TaskRowView: View {
   TaskListView(
     uiState: .init(
       tasks: [
-        TaskUiState(id: "1", name: "test", isDone: false, createdAt: Date().timeIntervalSince1970)
+        TaskUiState(
+          id: "1",
+          name: "test",
+          isDone: false,
+          createdAtText: DateFormatText.yyyyMdHHmm(from: Date())
+        )
       ],
       resetCountdown: "8h 30m"
     ),

@@ -34,6 +34,7 @@ let package = Package(
       dependencies: [
         "FeatureCommon",
         "SharedModel",
+        .product(name: "Dependencies", package: "swift-dependencies"),
       ],
       path: "./Sources/Feature/Task"
     ),
@@ -98,7 +99,10 @@ let package = Package(
     ),
     .testTarget(
       name: "TaskFeatureTests",
-      dependencies: ["TaskFeature"],
+      dependencies: [
+        "TaskFeature",
+        .product(name: "Dependencies", package: "swift-dependencies"),
+      ],
       path: "./Tests/Feature/Task"
     ),
   ]

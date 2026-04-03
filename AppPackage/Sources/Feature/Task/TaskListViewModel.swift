@@ -1,3 +1,4 @@
+import Dependencies
 import FeatureCommon
 import Foundation
 import Observation
@@ -43,6 +44,9 @@ public struct TaskListUiState: Sendable, Equatable {
 @Observable
 @MainActor
 public final class TaskListViewModel {
+  @ObservationIgnored
+  @Dependency(\.date) private var date
+
   public private(set) var uiState: TaskListUiState = .init()
 
   public init() {}
@@ -76,7 +80,7 @@ public final class TaskListViewModel {
         id: .init(rawValue: UUID().uuidString),
         name: name,
         isDone: false,
-        createdAtText: DateFormatText.yyyyMdHHmm(from: Date())
+        createdAtText: DateFormatText.yyyyMdHHmm(from: date.now)
       ))
     uiState.inputText = ""
     Log.default.info("addTask: name=\(name, privacy: .private)")

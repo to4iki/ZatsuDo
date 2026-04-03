@@ -1,3 +1,5 @@
+import Dependencies
+import Foundation
 import SharedModel
 import TaskFeature
 import Testing
@@ -40,6 +42,21 @@ struct TaskListViewModelTests {
     viewModel.updateInputText("   ")
     viewModel.addTask()
     #expect(viewModel.uiState.tasks.isEmpty)
+  }
+
+  @Test
+  func addTask_setsCreatedAtText() {
+    let fixedDate = Date(timeIntervalSince1970: 1_775_358_000)  // 2026-04-03 10:00 JST
+    withDependencies {
+      $0.date = .constant(fixedDate)
+    } operation: {
+      let viewModel = TaskListViewModel()
+
+      viewModel.updateInputText("Timed task")
+      viewModel.addTask()
+
+      #expect(viewModel.uiState.tasks[0].createdAtText.contains("2026"))
+    }
   }
 
   @Test

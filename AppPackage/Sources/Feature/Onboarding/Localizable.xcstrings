@@ -66,17 +66,6 @@
           }
         }
       }
-    },
-    "Skip" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "スキップ"
-          }
-        }
-      }
     }
   },
   "version" : "1.1"

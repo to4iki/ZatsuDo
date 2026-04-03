@@ -20,25 +20,9 @@ struct OnboardingView: View {
 
   var body: some View {
     VStack {
-      skipButton
       pageContent
       actionButton
     }
-  }
-
-  private var skipButton: some View {
-    HStack {
-      Spacer()
-      Button(String(localized: "Skip", bundle: .module)) {
-        onComplete()
-      }
-      .foregroundStyle(.secondary)
-      .padding(.horizontal, 20)
-      .padding(.top, 8)
-    }
-    .opacity(uiState.isLastPage ? 0 : 1)
-    .disabled(uiState.isLastPage)
-    .accessibilityHidden(uiState.isLastPage)
   }
 
   private var pageContent: some View {

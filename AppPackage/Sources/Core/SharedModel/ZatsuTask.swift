@@ -1,7 +1,7 @@
 import Foundation
 import ID
 
-public struct ZatsuTask: Equatable, Hashable, Sendable, Identifiable {
+public struct ZatsuTask: Equatable, Hashable, Sendable, Identifiable, Codable {
   public struct ID: StringIDProtocol {
     public let rawValue: String
 

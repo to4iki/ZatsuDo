@@ -34,6 +34,7 @@ let package = Package(
       dependencies: [
         "FeatureCommon",
         "SharedModel",
+        "AppStorage",
         .product(name: "Dependencies", package: "swift-dependencies"),
       ],
       path: "./Sources/Feature/Task"
@@ -61,6 +62,7 @@ let package = Package(
     .target(
       name: "AppStorage",
       dependencies: [
+        "SharedModel",
         .product(name: "Dependencies", package: "swift-dependencies"),
         .product(name: "DependenciesMacros", package: "swift-dependencies"),
         .product(name: "Logger", package: "AppLibrary"),

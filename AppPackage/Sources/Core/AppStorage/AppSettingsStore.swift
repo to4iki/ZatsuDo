@@ -30,6 +30,13 @@ final class AppSettingsStore: @unchecked Sendable {
     }
     set { defaults.set(newValue, forKey: Keys.resetMinute) }
   }
+
+  // MARK: - Tasks
+
+  var tasksData: Data? {
+    get { defaults.data(forKey: Keys.tasksData) }
+    set { defaults.set(newValue, forKey: Keys.tasksData) }
+  }
 }
 
 extension AppSettingsStore {
@@ -37,5 +44,6 @@ extension AppSettingsStore {
     static let isOnboardingCompleted = "isOnboardingCompleted"
     static let resetHour = "resetHour"
     static let resetMinute = "resetMinute"
+    static let tasksData = "tasksData"
   }
 }

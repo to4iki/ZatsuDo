@@ -26,8 +26,8 @@ public final class SettingViewModel {
   public init() {
     @Dependency(\.resetTimeClient) var resetTimeClient
     self.uiState = SettingUiState(
-      resetHour: resetTimeClient.fetchHour(),
-      resetMinute: resetTimeClient.fetchMinute()
+      resetHour: resetTimeClient.readHour(),
+      resetMinute: resetTimeClient.readMinute()
     )
   }
 
@@ -38,7 +38,7 @@ public final class SettingViewModel {
     guard hour != uiState.resetHour || minute != uiState.resetMinute else { return }
     uiState.resetHour = hour
     uiState.resetMinute = minute
-    client.setHour(hour)
-    client.setMinute(minute)
+    client.writeHour(hour)
+    client.writeMinute(minute)
   }
 }

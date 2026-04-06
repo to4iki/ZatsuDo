@@ -4,10 +4,10 @@ import Logger
 
 @DependencyClient
 public struct ResetTimeClient: Sendable {
-  public var fetchHour: @Sendable () -> Int = { defaultHour }
-  public var setHour: @Sendable (Int) -> Void = { _ in }
-  public var fetchMinute: @Sendable () -> Int = { defaultMinute }
-  public var setMinute: @Sendable (Int) -> Void = { _ in }
+  public var readHour: @Sendable () -> Int = { defaultHour }
+  public var writeHour: @Sendable (Int) -> Void = { _ in }
+  public var readMinute: @Sendable () -> Int = { defaultMinute }
+  public var writeMinute: @Sendable (Int) -> Void = { _ in }
 
   // MARK: - Defaults
 
@@ -19,14 +19,14 @@ extension ResetTimeClient: DependencyKey {
   public static let liveValue: ResetTimeClient = {
     let store = AppSettingsStore()
     return ResetTimeClient(
-      fetchHour: { store.resetHour },
-      setHour: {
-        Log.default.info("ResetTimeClient: setHour=\($0)")
+      readHour: { store.resetHour },
+      writeHour: {
+        Log.default.info("ResetTimeClient: writeHour=\($0)")
         store.resetHour = $0
       },
-      fetchMinute: { store.resetMinute },
-      setMinute: {
-        Log.default.info("ResetTimeClient: setMinute=\($0)")
+      readMinute: { store.resetMinute },
+      writeMinute: {
+        Log.default.info("ResetTimeClient: writeMinute=\($0)")
         store.resetMinute = $0
       }
     )

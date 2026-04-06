@@ -56,8 +56,8 @@ struct ExampleViewModelTests {
   @Test
   func someAction_expectedBehavior() {
     withDependencies {
-      $0.appSettingsClient.fetchResetHour = { 4 }
-      $0.appSettingsClient.setResetHour = { _ in }
+      $0.resetTimeClient.readHour = { 4 }
+      $0.resetTimeClient.writeHour = { _ in }
     } operation: {
       let viewModel = ExampleViewModel()
 
@@ -68,8 +68,8 @@ struct ExampleViewModelTests {
 ```
 
 - `withDependencies` ブロック内で必要なエンドポイントのみオーバーライドする
-- setter の呼び出しを検証したい場合はキャプチャ変数を使用する
-- 依存を一切カスタマイズしない場合は `$0.appSettingsClient = .testValue` で一括設定できる
+- writer の呼び出しを検証したい場合はキャプチャ変数を使用する
+- 依存を一切カスタマイズしない場合は `$0.resetTimeClient = .testValue` で一括設定できる
 
 ## テストケースの粒度
 

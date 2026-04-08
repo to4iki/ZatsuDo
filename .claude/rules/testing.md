@@ -56,8 +56,8 @@ struct ExampleViewModelTests {
   @Test
   func someAction_expectedBehavior() {
     withDependencies {
-      $0.resetTimeClient.readHour = { 4 }
-      $0.resetTimeClient.writeHour = { _ in }
+      $0.resetTimeClient.getHour = { 4 }
+      $0.resetTimeClient.saveHour = { _ in }
     } operation: {
       let viewModel = ExampleViewModel()
 

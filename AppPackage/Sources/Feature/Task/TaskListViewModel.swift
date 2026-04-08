@@ -58,7 +58,7 @@ public final class TaskListViewModel {
 
   public init() {
     @Dependency(\.taskStorageClient) var storageClient
-    let loaded = storageClient.readTasks()
+    let loaded = storageClient.getTasks()
     self.tasks = loaded
     self.uiState.tasks = loaded.map(TaskUiState.init(from:))
   }
@@ -72,7 +72,7 @@ public final class TaskListViewModel {
     tasks[index] = ZatsuTask(
       id: task.id, name: task.name, isDone: !task.isDone, createdAt: task.createdAt)
     uiState.tasks[index].isDone.toggle()
-    storageClient.writeTasks(tasks)
+    storageClient.saveTasks(tasks)
     Log.default.debug("toggleTask: id=\(id.rawValue), isDone=\(self.uiState.tasks[index].isDone)")
   }
 
@@ -100,7 +100,7 @@ public final class TaskListViewModel {
     tasks.append(task)
     uiState.tasks.append(TaskUiState(from: task))
     uiState.inputText = ""
-    storageClient.writeTasks(tasks)
+    storageClient.saveTasks(tasks)
     Log.default.info("addTask: name=\(name, privacy: .private)")
   }
 }

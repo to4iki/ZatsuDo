@@ -4,17 +4,17 @@ import Logger
 
 @DependencyClient
 public struct OnboardingClient: Sendable {
-  public var readIsCompleted: @Sendable () -> Bool = { true }
-  public var writeIsCompleted: @Sendable (Bool) -> Void = { _ in }
+  public var getIsCompleted: @Sendable () -> Bool = { true }
+  public var saveIsCompleted: @Sendable (Bool) -> Void = { _ in }
 }
 
 extension OnboardingClient: DependencyKey {
   public static let liveValue: OnboardingClient = {
     let store = AppSettingsStore()
     return OnboardingClient(
-      readIsCompleted: { store.isOnboardingCompleted },
-      writeIsCompleted: {
-        Log.default.info("OnboardingClient: writeIsCompleted=\($0)")
+      getIsCompleted: { store.isOnboardingCompleted },
+      saveIsCompleted: {
+        Log.default.info("OnboardingClient: saveIsCompleted=\($0)")
         store.isOnboardingCompleted = $0
       }
     )

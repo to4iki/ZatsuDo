@@ -11,8 +11,8 @@ struct TaskListViewModelTests {
   @Test
   func toggleTask_togglesDoneState() {
     withDependencies {
-      $0.taskStorageClient.readTasks = { [] }
-      $0.taskStorageClient.writeTasks = { _ in }
+      $0.taskStorageClient.getTasks = { [] }
+      $0.taskStorageClient.saveTasks = { _ in }
     } operation: {
       let viewModel = TaskListViewModel()
 
@@ -29,8 +29,8 @@ struct TaskListViewModelTests {
   @Test
   func addTask_appendsTaskAndClearsInput() {
     withDependencies {
-      $0.taskStorageClient.readTasks = { [] }
-      $0.taskStorageClient.writeTasks = { _ in }
+      $0.taskStorageClient.getTasks = { [] }
+      $0.taskStorageClient.saveTasks = { _ in }
     } operation: {
       let viewModel = TaskListViewModel()
 
@@ -46,8 +46,8 @@ struct TaskListViewModelTests {
   @Test
   func addTask_ignoresEmptyInput() {
     withDependencies {
-      $0.taskStorageClient.readTasks = { [] }
-      $0.taskStorageClient.writeTasks = { _ in }
+      $0.taskStorageClient.getTasks = { [] }
+      $0.taskStorageClient.saveTasks = { _ in }
     } operation: {
       let viewModel = TaskListViewModel()
 
@@ -65,8 +65,8 @@ struct TaskListViewModelTests {
     let fixedDate = Date(timeIntervalSince1970: 1_775_358_000)  // 2026-04-03 10:00 JST
     withDependencies {
       $0.date = .constant(fixedDate)
-      $0.taskStorageClient.readTasks = { [] }
-      $0.taskStorageClient.writeTasks = { _ in }
+      $0.taskStorageClient.getTasks = { [] }
+      $0.taskStorageClient.saveTasks = { _ in }
     } operation: {
       let viewModel = TaskListViewModel()
 
@@ -81,8 +81,8 @@ struct TaskListViewModelTests {
   func addTask_persistsToStorage() {
     var savedTasks: [ZatsuTask]?
     withDependencies {
-      $0.taskStorageClient.readTasks = { [] }
-      $0.taskStorageClient.writeTasks = { savedTasks = $0 }
+      $0.taskStorageClient.getTasks = { [] }
+      $0.taskStorageClient.saveTasks = { savedTasks = $0 }
     } operation: {
       let viewModel = TaskListViewModel()
 
@@ -100,8 +100,8 @@ struct TaskListViewModelTests {
       ZatsuTask(id: "task-1", name: "Stored task", isDone: false, createdAt: 1_775_358_000)
     ]
     withDependencies {
-      $0.taskStorageClient.readTasks = { storedTasks }
-      $0.taskStorageClient.writeTasks = { _ in }
+      $0.taskStorageClient.getTasks = { storedTasks }
+      $0.taskStorageClient.saveTasks = { _ in }
     } operation: {
       let viewModel = TaskListViewModel()
 
@@ -113,8 +113,8 @@ struct TaskListViewModelTests {
   @Test
   func visibleTasks_hidesCompletedByDefault() {
     withDependencies {
-      $0.taskStorageClient.readTasks = { [] }
-      $0.taskStorageClient.writeTasks = { _ in }
+      $0.taskStorageClient.getTasks = { [] }
+      $0.taskStorageClient.saveTasks = { _ in }
     } operation: {
       let viewModel = TaskListViewModel()
 
@@ -135,8 +135,8 @@ struct TaskListViewModelTests {
   @Test
   func toggleShowCompletedTasks_togglesVisibility() {
     withDependencies {
-      $0.taskStorageClient.readTasks = { [] }
-      $0.taskStorageClient.writeTasks = { _ in }
+      $0.taskStorageClient.getTasks = { [] }
+      $0.taskStorageClient.saveTasks = { _ in }
     } operation: {
       let viewModel = TaskListViewModel()
 

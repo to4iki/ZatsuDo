@@ -5,8 +5,8 @@ import SharedModel
 
 @DependencyClient
 public struct TaskStorageClient: Sendable {
-  public var readTasks: @Sendable () -> [ZatsuTask] = { [] }
-  public var writeTasks: @Sendable ([ZatsuTask]) -> Void = { _ in }
+  public var getTasks: @Sendable () -> [ZatsuTask] = { [] }
+  public var saveTasks: @Sendable ([ZatsuTask]) -> Void = { _ in }
 }
 
 extension TaskStorageClient: DependencyKey {
@@ -15,12 +15,12 @@ extension TaskStorageClient: DependencyKey {
     let decoder = JSONDecoder()
     let encoder = JSONEncoder()
     return TaskStorageClient(
-      readTasks: {
+      getTasks: {
         guard let data = store.tasksData else { return [] }
         return (try? decoder.decode([ZatsuTask].self, from: data)) ?? []
       },
-      writeTasks: { tasks in
-        Log.default.info("TaskStorageClient: writeTasks count=\(tasks.count)")
+      saveTasks: { tasks in
+        Log.default.info("TaskStorageClient: saveTasks count=\(tasks.count)")
         store.tasksData = try? encoder.encode(tasks)
       }
     )

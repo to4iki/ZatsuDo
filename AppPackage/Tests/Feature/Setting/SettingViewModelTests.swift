@@ -13,10 +13,10 @@ struct SettingViewModelTests {
     var savedMinute: Int?
 
     withDependencies {
-      $0.resetTimeClient.readHour = { ResetTimeClient.defaultHour }
-      $0.resetTimeClient.readMinute = { ResetTimeClient.defaultMinute }
-      $0.resetTimeClient.writeHour = { savedHour = $0 }
-      $0.resetTimeClient.writeMinute = { savedMinute = $0 }
+      $0.resetTimeClient.getHour = { ResetTimeClient.defaultHour }
+      $0.resetTimeClient.getMinute = { ResetTimeClient.defaultMinute }
+      $0.resetTimeClient.saveHour = { savedHour = $0 }
+      $0.resetTimeClient.saveMinute = { savedMinute = $0 }
     } operation: {
       let viewModel = SettingViewModel()
 
@@ -36,14 +36,14 @@ struct SettingViewModelTests {
 
   @Test
   func updateResetTime_skipsWhenValueUnchanged() {
-    var writeHourCallCount = 0
-    var writeMinuteCallCount = 0
+    var saveHourCallCount = 0
+    var saveMinuteCallCount = 0
 
     withDependencies {
-      $0.resetTimeClient.readHour = { ResetTimeClient.defaultHour }
-      $0.resetTimeClient.readMinute = { ResetTimeClient.defaultMinute }
-      $0.resetTimeClient.writeHour = { _ in writeHourCallCount += 1 }
-      $0.resetTimeClient.writeMinute = { _ in writeMinuteCallCount += 1 }
+      $0.resetTimeClient.getHour = { ResetTimeClient.defaultHour }
+      $0.resetTimeClient.getMinute = { ResetTimeClient.defaultMinute }
+      $0.resetTimeClient.saveHour = { _ in saveHourCallCount += 1 }
+      $0.resetTimeClient.saveMinute = { _ in saveMinuteCallCount += 1 }
     } operation: {
       let viewModel = SettingViewModel()
 
@@ -59,16 +59,16 @@ struct SettingViewModelTests {
 
       #expect(viewModel.uiState.resetHour == initialHour)
       #expect(viewModel.uiState.resetMinute == initialMinute)
-      #expect(writeHourCallCount == 0)
-      #expect(writeMinuteCallCount == 0)
+      #expect(saveHourCallCount == 0)
+      #expect(saveMinuteCallCount == 0)
     }
   }
 
   @Test
   func init_loadsDefaultValues() {
     withDependencies {
-      $0.resetTimeClient.readHour = { ResetTimeClient.defaultHour }
-      $0.resetTimeClient.readMinute = { ResetTimeClient.defaultMinute }
+      $0.resetTimeClient.getHour = { ResetTimeClient.defaultHour }
+      $0.resetTimeClient.getMinute = { ResetTimeClient.defaultMinute }
     } operation: {
       let viewModel = SettingViewModel()
 

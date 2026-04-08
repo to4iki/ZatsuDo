@@ -18,11 +18,11 @@ public final class AppViewModel {
 
   public init() {
     @Dependency(\.onboardingClient) var onboardingClient
-    self.uiState = AppUiState(isOnboardingCompleted: onboardingClient.readIsCompleted())
+    self.uiState = AppUiState(isOnboardingCompleted: onboardingClient.getIsCompleted())
   }
 
   public func completeOnboarding() {
-    client.writeIsCompleted(true)
+    client.saveIsCompleted(true)
     uiState.isOnboardingCompleted = true
   }
 

@@ -41,17 +41,17 @@ Featureモジュール間の依存は禁止。Feature間の連携は `AppFeature
 
 | モジュール | 役割 |
 |---|---|
-| `AppStorage` | アプリ設定の永続化。[swift-dependencies](https://github.com/pointfreeco/swift-dependencies) の `@DependencyClient` で `OnboardingClient`・`ResetTimeClient` を定義し、UserDefaults の実装詳細を隠蔽する |
+| `AppStorage` | アプリ設定・タスクデータの永続化。[swift-dependencies](https://github.com/pointfreeco/swift-dependencies) の `@DependencyClient` で `OnboardingClient`・`ResetTimeClient`・`TaskStorageClient` を定義し、UserDefaults の実装詳細を隠蔽する |
 | `SharedModel` | Feature間で共有するモデル定義 |
 
 依存関係:
 
 ```
-AppFeature → TaskFeature → SharedModel → UtilType (AppLibrary)
+AppFeature → TaskFeature → AppStorage → SharedModel → UtilType (AppLibrary)
                          → FeatureCommon
 AppFeature → SettingFeature → AppStorage → swift-dependencies
 AppFeature → OnboardingFeature
-AppFeature → AppStorage (OnboardingClient, ResetTimeClient)
+AppFeature → AppStorage (OnboardingClient, ResetTimeClient, TaskStorageClient)
 ```
 
 ## スクリーンアーキテクチャ

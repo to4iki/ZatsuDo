@@ -1,3 +1,4 @@
+import AppStorage
 import Dependencies
 import FeatureCommon
 import Foundation
@@ -47,16 +48,31 @@ public final class TaskListViewModel {
   @ObservationIgnored
   @Dependency(\.date) private var date
 
+  @ObservationIgnored
+  @Dependency(\.taskStorageClient) private var storageClient
+
+  @ObservationIgnored
+  private var tasks: [ZatsuTask] = []
+
   public private(set) var uiState: TaskListUiState = .init()
 
-  public init() {}
+  public init() {
+    @Dependency(\.taskStorageClient) var storageClient
+    let loaded = storageClient.readTasks()
+    self.tasks = loaded
+    self.uiState.tasks = loaded.map(TaskUiState.init(from:))
+  }
 
   public func toggleTask(id: ZatsuTask.ID) {
-    guard let index = uiState.tasks.firstIndex(where: { $0.id == id }) else {
+    guard let index = tasks.firstIndex(where: { $0.id == id }) else {
       Log.default.error("toggleTask: task not found id=\(id.rawValue)")
       return
     }
+    let task = tasks[index]
+    tasks[index] = ZatsuTask(
+      id: task.id, name: task.name, isDone: !task.isDone, createdAt: task.createdAt)
     uiState.tasks[index].isDone.toggle()
+    storageClient.writeTasks(tasks)
     Log.default.debug("toggleTask: id=\(id.rawValue), isDone=\(self.uiState.tasks[index].isDone)")
   }
 
@@ -75,14 +91,16 @@ public final class TaskListViewModel {
     guard !name.isEmpty else {
       return
     }
-    uiState.tasks.append(
-      TaskUiState(
-        id: .init(rawValue: UUID().uuidString),
-        name: name,
-        isDone: false,
-        createdAtText: DateFormatText.yyyyMdHHmm(from: date.now)
-      ))
+    let task = ZatsuTask(
+      id: .init(rawValue: UUID().uuidString),
+      name: name,
+      isDone: false,
+      createdAt: date.now.timeIntervalSince1970
+    )
+    tasks.append(task)
+    uiState.tasks.append(TaskUiState(from: task))
     uiState.inputText = ""
+    storageClient.writeTasks(tasks)
     Log.default.info("addTask: name=\(name, privacy: .private)")
   }
 }

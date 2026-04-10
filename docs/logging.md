@@ -46,8 +46,8 @@ public func addTask() {
 AppStorage ターゲットには Logger を直接依存として追加する。
 
 ```swift
-setIsCompleted: {
-  Log.default.info("OnboardingClient: setIsCompleted=\($0)")
+saveIsCompleted: {
+  Log.default.info("OnboardingClient: saveIsCompleted=\($0)")
   store.isOnboardingCompleted = $0
 }
 ```

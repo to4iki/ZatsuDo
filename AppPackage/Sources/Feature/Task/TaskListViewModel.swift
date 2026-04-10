@@ -86,6 +86,21 @@ public final class TaskListViewModel {
     uiState.inputText = text
   }
 
+  public func updateTaskName(id: ZatsuTask.ID, name: String) {
+    let trimmed = name.trimmingCharacters(in: .whitespaces)
+    guard !trimmed.isEmpty else { return }
+    guard let index = tasks.firstIndex(where: { $0.id == id }) else {
+      Log.default.error("updateTaskName: task not found id=\(id.rawValue)")
+      return
+    }
+    let task = tasks[index]
+    tasks[index] = ZatsuTask(
+      id: task.id, name: trimmed, isDone: task.isDone, createdAt: task.createdAt)
+    uiState.tasks[index].name = trimmed
+    storageClient.saveTasks(tasks)
+    Log.default.info("updateTaskName: id=\(id.rawValue), name=\(trimmed, privacy: .private)")
+  }
+
   public func addTask() {
     let name = uiState.inputText.trimmingCharacters(in: .whitespaces)
     guard !name.isEmpty else {

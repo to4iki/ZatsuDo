@@ -30,7 +30,7 @@ Presentation(UI) と Domain(UI以外) を水平分割する。
 | モジュール | 役割 |
 |---|---|
 | `AppFeature` | 各Featureを束ねるルート |
-| `TaskFeature` | タスク一覧表示 |
+| `TaskFeature` | タスク一覧・編集 |
 | `SettingFeature` | 設定画面 |
 | `OnboardingFeature` | オンボーディング画面 |
 | `FeatureCommon` | 複数Featureで共通利用するUIコンポーネント |

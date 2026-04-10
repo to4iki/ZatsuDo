@@ -20,7 +20,8 @@ public struct TaskListScreen: View {
         onToggleTask: { viewModel.toggleTask(id: $0) },
         onToggleShowCompleted: { viewModel.toggleShowCompletedTasks() },
         onUpdateInputText: { viewModel.updateInputText($0) },
-        onAddTask: { viewModel.addTask() }
+        onAddTask: { viewModel.addTask() },
+        onEditTaskName: { viewModel.updateTaskName(id: $0, name: $1) }
       )
       .navigationTitle(String(localized: "Today", bundle: .module))
       .navigationBarTitleDisplayMode(.large)

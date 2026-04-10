@@ -133,6 +133,44 @@ struct TaskListViewModelTests {
   }
 
   @Test
+  func updateTaskName_updatesNameAndPersists() {
+    var savedTasks: [ZatsuTask]?
+    withDependencies {
+      $0.taskStorageClient.getTasks = { [] }
+      $0.taskStorageClient.saveTasks = { savedTasks = $0 }
+    } operation: {
+      let viewModel = TaskListViewModel()
+
+      viewModel.updateInputText("Original")
+      viewModel.addTask()
+
+      let taskId = viewModel.uiState.tasks[0].id
+      viewModel.updateTaskName(id: taskId, name: "Updated")
+
+      #expect(viewModel.uiState.tasks[0].name == "Updated")
+      #expect(savedTasks?[0].name == "Updated")
+    }
+  }
+
+  @Test
+  func updateTaskName_ignoresEmptyName() {
+    withDependencies {
+      $0.taskStorageClient.getTasks = { [] }
+      $0.taskStorageClient.saveTasks = { _ in }
+    } operation: {
+      let viewModel = TaskListViewModel()
+
+      viewModel.updateInputText("Keep me")
+      viewModel.addTask()
+
+      let taskId = viewModel.uiState.tasks[0].id
+      viewModel.updateTaskName(id: taskId, name: "   ")
+
+      #expect(viewModel.uiState.tasks[0].name == "Keep me")
+    }
+  }
+
+  @Test
   func toggleShowCompletedTasks_togglesVisibility() {
     withDependencies {
       $0.taskStorageClient.getTasks = { [] }

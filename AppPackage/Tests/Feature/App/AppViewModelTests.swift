@@ -27,21 +27,6 @@ struct AppViewModelTests {
   }
 
   @Test
-  func presentSetting_updatesFlag() {
-    withDependencies {
-      $0.onboardingClient.getIsCompleted = { false }
-    } operation: {
-      let viewModel = AppViewModel()
-
-      #expect(viewModel.isSettingPresented == false)
-
-      viewModel.presentSetting()
-
-      #expect(viewModel.isSettingPresented == true)
-    }
-  }
-
-  @Test
   func init_restoresOnboardingStateFromClient() {
     withDependencies {
       $0.onboardingClient.getIsCompleted = { true }

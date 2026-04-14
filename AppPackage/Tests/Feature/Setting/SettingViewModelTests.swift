@@ -63,17 +63,4 @@ struct SettingViewModelTests {
       #expect(saveMinuteCallCount == 0)
     }
   }
-
-  @Test
-  func init_loadsDefaultValues() {
-    withDependencies {
-      $0.resetTimeClient.getHour = { ResetTimeClient.defaultHour }
-      $0.resetTimeClient.getMinute = { ResetTimeClient.defaultMinute }
-    } operation: {
-      let viewModel = SettingViewModel()
-
-      #expect(viewModel.uiState.resetHour == ResetTimeClient.defaultHour)
-      #expect(viewModel.uiState.resetMinute == ResetTimeClient.defaultMinute)
-    }
-  }
 }

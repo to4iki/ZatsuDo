@@ -1,3 +1,3 @@
 # ZatsuDo App
 
-雑にToDoを管理するiOSアプリ。
+sample iOS multi-module todo application.

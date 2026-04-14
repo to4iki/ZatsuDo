@@ -1,8 +1,8 @@
-# ZatsuDo
+# ZatsuDo App
 ![Swift 6](https://img.shields.io/badge/swift-6-orange.svg)
 ![iOS 26+](https://img.shields.io/badge/iOS-26%2B-blue.svg)
 
-A casual todo app — quickly capture tasks without overthinking it.
+sample iOS multi-module todo application — quickly capture tasks without overthinking it.
 
 ## Architecture
 
